@@ -90,7 +90,10 @@ class RoundRect(displayio.TileGrid):
             # draw round corners
             self._helper(r, r, r, color=1, stroke=stroke,
                          x_offset=width-2*r-1, y_offset=height-2*r-1)
-        super().__init__(self._bitmap, pixel_shader=self._palette, position=(x, y))
+        try:
+            super().__init__(self._bitmap, pixel_shader=self._palette, position=(x, y))
+        except TypeError:
+            super().__init__(self._bitmap, pixel_shader=self._palette, x=x, y=y)
 
     # pylint: disable=invalid-name, too-many-locals, too-many-branches
     def _helper(self, x0, y0, r, *, color, x_offset=0, y_offset=0,

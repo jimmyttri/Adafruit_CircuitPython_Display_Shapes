@@ -78,7 +78,10 @@ class Rect(displayio.TileGrid):
             self._palette[0] = fill
         else:
             self._palette.make_transparent(0)
-        super().__init__(self._bitmap, pixel_shader=self._palette, position=(x, y))
+        try:
+            super().__init__(self._bitmap, pixel_shader=self._palette, position=(x, y))
+        except TypeError:
+            super().__init__(self._bitmap, pixel_shader=self._palette, x=x, y=y)
 
     @property
     def fill(self):
