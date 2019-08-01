@@ -3,6 +3,7 @@ import displayio
 from adafruit_display_shapes.rect import Rect
 from adafruit_display_shapes.circle import Circle
 from adafruit_display_shapes.roundrect import RoundRect
+from adafruit_display_shapes.triangle import Triangle
 
 # Make the display context
 splash = displayio.Group(max_size=10)
@@ -16,6 +17,9 @@ bg_sprite = displayio.TileGrid(color_bitmap, x=0, y=0,
                                pixel_shader=color_palette)
 splash.append(bg_sprite)
 ##########################################################################
+
+triangle = Triangle(170, 50, 120, 140, 210, 160, fill=0x00FF00, outline=0xFF00FF)
+splash.append(triangle)
 
 rect = Rect(80, 20, 41, 41, fill=0x0)
 splash.append(rect)
