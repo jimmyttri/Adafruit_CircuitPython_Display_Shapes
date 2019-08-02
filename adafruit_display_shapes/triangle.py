@@ -73,31 +73,17 @@ class Triangle(displayio.TileGrid):
             y0, y1 = y1, y0
             x0, x1 = x1, x0
 
-        smallest_x = x0
-        largest_x = x0
-
         # Find the largest and smallest X values to figure out width for bitmap
-        if x1 > largest_x:
-            largest_x = x1
-
-        if x1 < smallest_x:
-            smallest_x = x1
-
-        if x2 > largest_x:
-            largest_x = x2
-
-        if x2 < smallest_x:
-            smallest_x = x2
-
+        xs = [x0, x1, x2]
+        width = max(xs) - min(xs) + 1
         height = y2 - y0 + 1
-        width = largest_x - smallest_x + 1
 
         self._palette = displayio.Palette(3)
         self._palette.make_transparent(0)
         self._bitmap = displayio.Bitmap(width, height, 3)
 
         if fill is not None:
-            self._helper(x0 - smallest_x, 0, x1 - smallest_x, y1 - y0, x2 - smallest_x, y2 - y0)
+            self._draw_filled(x0 - min(xs), 0, x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0)
             self._palette[2] = fill
         else:
             self._palette.make_transparent(2)
@@ -105,14 +91,14 @@ class Triangle(displayio.TileGrid):
         if outline is not None:
             print("outline")
             self._palette[1] = outline
-            self._line(x0 - smallest_x, 0, x1 - smallest_x, y1 - y0, 1)
-            self._line(x1 - smallest_x, y1 - y0, x2 - smallest_x, y2 - y0, 1)
-            self._line(x2 - smallest_x, y2 - y0, x0 - smallest_x, 0, 1)
+            self._line(x0 - min(xs), 0, x1 - min(xs), y1 - y0, 1)
+            self._line(x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0, 1)
+            self._line(x2 - min(xs), y2 - y0, x0 - min(xs), 0, 1)
 
-        super().__init__(self._bitmap, pixel_shader=self._palette, x=smallest_x, y=y0)
+        super().__init__(self._bitmap, pixel_shader=self._palette, x=min(xs), y=y0)
 
     # pylint: disable=invalid-name, too-many-locals, too-many-branches
-    def _helper(self, x0, y0, x1, y1, x2, y2):
+    def _draw_filled(self, x0, y0, x1, y1, x2, y2):
         if y0 == y2: # Handle awkward all-on-same-line case as its own thing
             a = x0
             b = x0
