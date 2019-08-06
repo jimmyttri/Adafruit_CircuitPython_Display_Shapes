@@ -20,10 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`rect`
+`roundrect`
 ================================================================================
 
-Various common shapes for use with displayio - Rectangle shape!
+Various common shapes for use with displayio - Rounded Rectangle shape!
 
 
 * Author(s): Limor Fried
