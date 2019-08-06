@@ -12,3 +12,6 @@
 
 .. automodule:: adafruit_display_shapes.roundrect
   :members:
+
+.. automodule:: adafruit_display_shapes.triangle
+  :members:
