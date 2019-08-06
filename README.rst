@@ -71,6 +71,9 @@ Usage Example
     print(bg_sprite.position)
     splash.append(bg_sprite)
 
+    triangle = Triangle(170, 50, 120, 140, 210, 160, fill=0x00FF00, outline=0xFF00FF)
+    splash.append(triangle)
+
     rect = Rect(80, 20, 41, 41, fill=0x0)
     splash.append(rect)
 
