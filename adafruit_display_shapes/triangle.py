@@ -89,7 +89,7 @@ class Triangle(displayio.TileGrid):
             self._palette.make_transparent(2)
 
         if outline is not None:
-            print("outline")
+            # print("outline")
             self._palette[1] = outline
             self._line(x0 - min(xs), 0, x1 - min(xs), y1 - y0, 1)
             self._line(x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0, 1)
@@ -186,9 +186,11 @@ class Triangle(displayio.TileGrid):
     @fill.setter
     def fill(self, color):
         if color is None:
+            self._palette[2] = 0
             self._palette.make_transparent(2)
         else:
             self._palette[2] = color
+            self._palette.make_opaque(2)
 
     @property
     def outline(self):
@@ -199,6 +201,8 @@ class Triangle(displayio.TileGrid):
     @outline.setter
     def outline(self, color):
         if color is None:
+            self._palette[1] = 0
             self._palette.make_transparent(1)
         else:
             self._palette[1] = color
+            self._palette.make_opaque(1)

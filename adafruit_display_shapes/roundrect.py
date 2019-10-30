@@ -20,21 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`roundrect`
+`my_roundrect`
 ================================================================================
 
-Various common shapes for use with displayio - Rounded Rectangle shape!
-
-
-* Author(s): Limor Fried
-
-Implementation Notes
---------------------
-
-**Software and Dependencies:**
-
-* Adafruit CircuitPython firmware for the supported boards:
-  https://github.com/adafruit/circuitpython/releases
+A slightly modified version of Adafruit_CircuitPython_Display_Shapes that includes
+an explicit call to palette.make_opaque() in the fill color setter function.
 
 """
 
@@ -65,16 +55,18 @@ class RoundRect(displayio.TileGrid):
         self._palette = displayio.Palette(3)
         self._palette.make_transparent(0)
         self._bitmap = displayio.Bitmap(width, height, 3)
+        for i in range(0, width):   # draw the center chunk
+            for j in range(r, height - r):   # draw the center chunk
+                self._bitmap[i, j] = 2
+        self._helper(r, r, r, color=2, fill=True,
+                    x_offset=width-2*r-1, y_offset=height-2*r-1)
 
         if fill is not None:
-            for i in range(0, width):   # draw the center chunk
-                for j in range(r, height - r):   # draw the center chunk
-                    self._bitmap[i, j] = 2
-            self._helper(r, r, r, color=2, fill=True,
-                         x_offset=width-2*r-1, y_offset=height-2*r-1)
             self._palette[2] = fill
+            self._palette.make_opaque(2)
         else:
             self._palette.make_transparent(2)
+            self._palette[2] = 0
 
         if outline is not None:
             self._palette[1] = outline
@@ -148,9 +140,11 @@ class RoundRect(displayio.TileGrid):
     @fill.setter
     def fill(self, color):
         if color is None:
+            self._palette[2] = 0
             self._palette.make_transparent(2)
         else:
             self._palette[2] = color
+            self._palette.make_opaque(2)
 
     @property
     def outline(self):
@@ -161,6 +155,8 @@ class RoundRect(displayio.TileGrid):
     @outline.setter
     def outline(self, color):
         if color is None:
+            self._palette[1] = 0
             self._palette.make_transparent(1)
         else:
             self._palette[1] = color
+            self._palette.make_opaque(2)
