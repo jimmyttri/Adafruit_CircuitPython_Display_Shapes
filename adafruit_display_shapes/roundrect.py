@@ -59,7 +59,7 @@ class RoundRect(displayio.TileGrid):
             for j in range(r, height - r):   # draw the center chunk
                 self._bitmap[i, j] = 2
         self._helper(r, r, r, color=2, fill=True,
-                    x_offset=width-2*r-1, y_offset=height-2*r-1)
+                     x_offset=width-2*r-1, y_offset=height-2*r-1)
 
         if fill is not None:
             self._palette[2] = fill
