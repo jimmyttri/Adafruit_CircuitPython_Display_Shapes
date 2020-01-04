@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_Display_Shapes.svg?branch=master
-    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_Display_Shapes
+.. image:: https://github.com/adafruit/Adafruit_CircuitPython_Display_Shapes/workflows/Build%20CI/badge.svg
+    :target: https://github.com/adafruit/Adafruit_CircuitPython_Display_Shapes/actions
     :alt: Build Status
 
 Various common shapes for use with displayio
