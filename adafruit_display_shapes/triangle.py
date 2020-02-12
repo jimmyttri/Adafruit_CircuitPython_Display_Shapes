@@ -38,13 +38,13 @@ Implementation Notes
 
 """
 
-import displayio
+from adafruit_display_shapes.polygon import Polygon
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Display_Shapes.git"
 
 
-class Triangle(displayio.TileGrid):
+class Triangle(Polygon):
     # pylint: disable=too-many-arguments,invalid-name
     """A triangle.
 
@@ -59,6 +59,7 @@ class Triangle(displayio.TileGrid):
     :param outline: The outline of the triangle. Can be a hex value for a color or
                     ``None`` for no outline.
     """
+    # pylint: disable=too-many-locals
     def __init__(self, x0, y0, x1, y1, x2, y2, *, fill=None, outline=None):
         # Sort coordinates by Y order (y2 >= y1 >= y0)
         if y0 > y1:
@@ -75,29 +76,29 @@ class Triangle(displayio.TileGrid):
 
         # Find the largest and smallest X values to figure out width for bitmap
         xs = [x0, x1, x2]
-        width = max(xs) - min(xs) + 1
-        height = y2 - y0 + 1
+        points = [(x0, y0), (x1, y1), (x2, y2)]
 
-        self._palette = displayio.Palette(3)
-        self._palette.make_transparent(0)
-        self._bitmap = displayio.Bitmap(width, height, 3)
+        # Initialize the bitmap and palette
+        super().__init__(points)
 
         if fill is not None:
             self._draw_filled(x0 - min(xs), 0, x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0)
-            self._palette[2] = fill
+            self.fill = fill
         else:
-            self._palette.make_transparent(2)
+            self.fill = None
 
         if outline is not None:
-            # print("outline")
-            self._palette[1] = outline
-            self._line(x0 - min(xs), 0, x1 - min(xs), y1 - y0, 1)
-            self._line(x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0, 1)
-            self._line(x2 - min(xs), y2 - y0, x0 - min(xs), 0, 1)
+            self.outline = outline
+            for index, _ in enumerate(points):
+                point_a = points[index]
+                if index == len(points) - 1:
+                    point_b = points[0]
+                else:
+                    point_b = points[index + 1]
+                self._line(point_a[0] - min(xs), point_a[1] - y0,
+                           point_b[0] - min(xs), point_b[1] - y0, 1)
 
-        super().__init__(self._bitmap, pixel_shader=self._palette, x=min(xs), y=y0)
-
-    # pylint: disable=invalid-name, too-many-locals, too-many-branches
+    # pylint: disable=invalid-name, too-many-branches
     def _draw_filled(self, x0, y0, x1, y1, x2, y2):
         if y0 == y2: # Handle awkward all-on-same-line case as its own thing
             a = x0
@@ -134,47 +135,6 @@ class Triangle(displayio.TileGrid):
             if a > b:
                 a, b = b, a
             self._line(a, y, b, y, 2)
-
-    def _line(self, x0, y0, x1, y1, color):
-        if x0 == x1:
-            if y0 > y1:
-                y0, y1 = y1, y0
-            for _h in range(y0, y1):
-                self._bitmap[x0, _h] = color
-        elif y0 == y1:
-            if x0 > x1:
-                x0, x1 = x1, x0
-            for _w in range(x0, x1):
-                self._bitmap[_w, y0] = color
-        else:
-            steep = abs(y1 - y0) > abs(x1 - x0)
-            if steep:
-                x0, y0 = y0, x0
-                x1, y1 = y1, x1
-
-            if x0 > x1:
-                x0, x1 = x1, x0
-                y0, y1 = y1, y0
-
-            dx = x1 - x0
-            dy = abs(y1 - y0)
-
-            err = dx / 2
-
-            if y0 < y1:
-                ystep = 1
-            else:
-                ystep = -1
-
-            for x in range(x0, x1):
-                if steep:
-                    self._bitmap[y0, x] = color
-                else:
-                    self._bitmap[x, y0] = color
-                err -= dy
-                if err < 0:
-                    y0 += ystep
-                    err += dx
     # pylint: enable=invalid-name, too-many-locals, too-many-branches
 
     @property
@@ -191,18 +151,3 @@ class Triangle(displayio.TileGrid):
         else:
             self._palette[2] = color
             self._palette.make_opaque(2)
-
-    @property
-    def outline(self):
-        """The outline of the triangle. Can be a hex value for a color or
-        ``None`` for no outline."""
-        return self._palette[1]
-
-    @outline.setter
-    def outline(self, color):
-        if color is None:
-            self._palette[1] = 0
-            self._palette.make_transparent(1)
-        else:
-            self._palette[1] = color
-            self._palette.make_opaque(1)
