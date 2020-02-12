@@ -4,9 +4,11 @@ from adafruit_display_shapes.rect import Rect
 from adafruit_display_shapes.circle import Circle
 from adafruit_display_shapes.roundrect import RoundRect
 from adafruit_display_shapes.triangle import Triangle
+from adafruit_display_shapes.line import Line
+from adafruit_display_shapes.polygon import Polygon
 
 # Make the display context
-splash = displayio.Group(max_size=10)
+splash = displayio.Group(max_size=20)
 board.DISPLAY.show(splash)
 
 # Make a background color fill
@@ -17,6 +19,16 @@ bg_sprite = displayio.TileGrid(color_bitmap, x=0, y=0,
                                pixel_shader=color_palette)
 splash.append(bg_sprite)
 ##########################################################################
+
+splash.append(Line(220, 130, 270, 210, 0xFF0000))
+splash.append(Line(270, 210, 220, 210, 0xFF0000))
+splash.append(Line(220, 210, 270, 130, 0xFF0000))
+splash.append(Line(270, 130, 220, 130, 0xFF0000))
+
+#Draw a blue star
+polygon = Polygon([(255, 40), (262, 62), (285, 62), (265, 76), (275, 100),
+                   (255, 84), (235, 100), (245, 76), (225, 62), (248, 62)], outline=0x0000FF)
+splash.append(polygon)
 
 triangle = Triangle(170, 50, 120, 140, 210, 160, fill=0x00FF00, outline=0xFF00FF)
 splash.append(triangle)
