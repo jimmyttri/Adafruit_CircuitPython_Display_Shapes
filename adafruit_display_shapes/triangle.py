@@ -59,6 +59,7 @@ class Triangle(Polygon):
     :param outline: The outline of the triangle. Can be a hex value for a color or
                     ``None`` for no outline.
     """
+    # pylint: disable=too-many-locals
     def __init__(self, x0, y0, x1, y1, x2, y2, *, fill=None, outline=None):
         # Sort coordinates by Y order (y2 >= y1 >= y0)
         if y0 > y1:
@@ -97,7 +98,7 @@ class Triangle(Polygon):
                 self._line(point_a[0] - min(xs), point_a[1] - y0,
                            point_b[0] - min(xs), point_b[1] - y0, 1)
 
-    # pylint: disable=invalid-name, too-many-locals, too-many-branches
+    # pylint: disable=invalid-name, too-many-branches
     def _draw_filled(self, x0, y0, x1, y1, x2, y2):
         if y0 == y2: # Handle awkward all-on-same-line case as its own thing
             a = x0
