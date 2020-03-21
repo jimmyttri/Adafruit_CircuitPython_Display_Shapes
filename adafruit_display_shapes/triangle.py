@@ -82,7 +82,9 @@ class Triangle(Polygon):
         super().__init__(points)
 
         if fill is not None:
-            self._draw_filled(x0 - min(xs), 0, x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0)
+            self._draw_filled(
+                x0 - min(xs), 0, x1 - min(xs), y1 - y0, x2 - min(xs), y2 - y0
+            )
             self.fill = fill
         else:
             self.fill = None
@@ -95,12 +97,17 @@ class Triangle(Polygon):
                     point_b = points[0]
                 else:
                     point_b = points[index + 1]
-                self._line(point_a[0] - min(xs), point_a[1] - y0,
-                           point_b[0] - min(xs), point_b[1] - y0, 1)
+                self._line(
+                    point_a[0] - min(xs),
+                    point_a[1] - y0,
+                    point_b[0] - min(xs),
+                    point_b[1] - y0,
+                    1,
+                )
 
     # pylint: disable=invalid-name, too-many-branches
     def _draw_filled(self, x0, y0, x1, y1, x2, y2):
-        if y0 == y2: # Handle awkward all-on-same-line case as its own thing
+        if y0 == y2:  # Handle awkward all-on-same-line case as its own thing
             a = x0
             b = x0
             if x1 < a:
@@ -116,9 +123,9 @@ class Triangle(Polygon):
             return
 
         if y1 == y2:
-            last = y1   # Include y1 scanline
+            last = y1  # Include y1 scanline
         else:
-            last = y1 - 1 # Skip it
+            last = y1 - 1  # Skip it
 
         # Upper Triangle
         for y in range(y0, last + 1):
@@ -135,6 +142,7 @@ class Triangle(Polygon):
             if a > b:
                 a, b = b, a
             self._line(a, y, b, y, 2)
+
     # pylint: enable=invalid-name, too-many-locals, too-many-branches
 
     @property

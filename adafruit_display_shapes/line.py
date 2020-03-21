@@ -43,6 +43,7 @@ from adafruit_display_shapes.polygon import Polygon
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Display_Shapes.git"
 
+
 class Line(Polygon):
     # pylint: disable=too-many-arguments,invalid-name
     """A line.
@@ -53,5 +54,6 @@ class Line(Polygon):
     :param y1: The y-position of the second vertex.
     :param color: The color of the line.
     """
+
     def __init__(self, x0, y0, x1, y1, color):
         super().__init__([(x0, y0), (x1, y1)], outline=color)
