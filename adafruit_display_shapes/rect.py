@@ -59,6 +59,7 @@ class Rect(displayio.TileGrid):
                    ``height``.
 
     """
+
     def __init__(self, x, y, width, height, *, fill=None, outline=None, stroke=1):
         self._bitmap = displayio.Bitmap(width, height, 2)
         self._palette = displayio.Palette(2)
@@ -68,11 +69,11 @@ class Rect(displayio.TileGrid):
             for w in range(width):
                 for line in range(stroke):
                     self._bitmap[w, line] = 1
-                    self._bitmap[w, height-1-line] = 1
+                    self._bitmap[w, height - 1 - line] = 1
             for _h in range(height):
                 for line in range(stroke):
                     self._bitmap[line, _h] = 1
-                    self._bitmap[width-1-line, _h] = 1
+                    self._bitmap[width - 1 - line, _h] = 1
 
         if fill is not None:
             self._palette[0] = fill

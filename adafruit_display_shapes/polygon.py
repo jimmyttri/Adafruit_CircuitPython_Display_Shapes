@@ -54,6 +54,7 @@ class Polygon(displayio.TileGrid):
     :param outline: The outline of the polygon. Can be a hex value for a color or
                     ``None`` for no outline.
     """
+
     def __init__(self, points, *, outline=None):
         xs = []
         ys = []
@@ -82,10 +83,17 @@ class Polygon(displayio.TileGrid):
                     point_b = points[0]
                 else:
                     point_b = points[index + 1]
-                self._line(point_a[0] - x_offset, point_a[1] - y_offset,
-                           point_b[0] - x_offset, point_b[1] - y_offset, 1)
+                self._line(
+                    point_a[0] - x_offset,
+                    point_a[1] - y_offset,
+                    point_b[0] - x_offset,
+                    point_b[1] - y_offset,
+                    1,
+                )
 
-        super().__init__(self._bitmap, pixel_shader=self._palette, x=x_offset, y=y_offset)
+        super().__init__(
+            self._bitmap, pixel_shader=self._palette, x=x_offset, y=y_offset
+        )
 
     # pylint: disable=invalid-name, too-many-locals, too-many-branches
     def _line(self, x0, y0, x1, y1, color):
@@ -128,6 +136,7 @@ class Polygon(displayio.TileGrid):
                 if err < 0:
                     y0 += ystep
                     err += dx
+
     # pylint: enable=invalid-name, too-many-locals, too-many-branches
 
     @property
