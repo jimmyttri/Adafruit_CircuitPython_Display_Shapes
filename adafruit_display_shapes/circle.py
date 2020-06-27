@@ -54,10 +54,18 @@ class Circle(RoundRect):
                  ``None`` for transparent.
     :param outline: The outline of the rounded-corner rectangle. Can be a hex value for a color or
                     ``None`` for no outline.
+    :param stroke: Used for the outline. Will not change the radius.
 
     """
 
-    def __init__(self, x0, y0, r, *, fill=None, outline=None):
+    def __init__(self, x0, y0, r, *, fill=None, outline=None, stroke=1):
         super().__init__(
-            x0 - r, y0 - r, 2 * r + 1, 2 * r + 1, r, fill=fill, outline=outline
+            x0 - r,
+            y0 - r,
+            2 * r + 1,
+            2 * r + 1,
+            r,
+            fill=fill,
+            outline=outline,
+            stroke=stroke,
         )
