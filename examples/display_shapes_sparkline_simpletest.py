@@ -29,67 +29,69 @@ import terminalio
 import random
 import time
 from adafruit_display_shapes.sparkline import Sparkline
-from adafruit_ili9341 import ILI9341
+
 from adafruit_display_text import label
 
-import gc
 
 # from sparkline import sparkline # use this if sparkline.py is used to define the sparkline Class
 
+if "DISPLAY" not in dir(board):
+    # Setup the LCD display with driver
+    from adafruit_ili9341 import ILI9341
 
-# Setup the LCD display
+    displayio.release_displays()
 
-displayio.release_displays()
+    # setup the SPI bus
+    spi = board.SPI()
+    tft_cs = board.D9  # arbitrary, pin not used
+    tft_dc = board.D10
+    tft_backlight = board.D12
+    tft_reset = board.D11
 
+    while not spi.try_lock():
+        spi.configure(baudrate=32000000)
+        pass
+    spi.unlock()
 
-# setup the SPI bus
-spi = board.SPI()
-tft_cs = board.D9  # arbitrary, pin not used
-tft_dc = board.D10
-tft_backlight = board.D12
-tft_reset = board.D11
+    display_bus = displayio.FourWire(
+        spi,
+        command=tft_dc,
+        chip_select=tft_cs,
+        reset=tft_reset,
+        baudrate=32000000,
+        polarity=1,
+        phase=1,
+    )
 
-while not spi.try_lock():
-    spi.configure(baudrate=32000000)
-    pass
-spi.unlock()
+    print("spi.frequency: {}".format(spi.frequency))
 
-display_bus = displayio.FourWire(
-    spi,
-    command=tft_dc,
-    chip_select=tft_cs,
-    reset=tft_reset,
-    baudrate=32000000,
-    polarity=1,
-    phase=1,
-)
+    # Number of pixels in the display
+    DISPLAY_WIDTH = 320
+    DISPLAY_HEIGHT = 240
 
-print("spi.frequency: {}".format(spi.frequency))
+    # create the display
+    display = ILI9341(
+        display_bus,
+        width=DISPLAY_WIDTH,
+        height=DISPLAY_HEIGHT,
+        rotation=180,
+        auto_refresh=True,
+        native_frames_per_second=90,
+    )
 
-# Number of pixels in the display
-DISPLAY_WIDTH = 320
-DISPLAY_HEIGHT = 240
-
-# create the display
-display = ILI9341(
-    display_bus,
-    width=DISPLAY_WIDTH,
-    height=DISPLAY_HEIGHT,
-    rotation=180,
-    auto_refresh=True,
-    native_frames_per_second=90,
-)
-
-# reset the display to show nothing.
-display.show(None)
+    # reset the display to show nothing.
+    display.show(None)
+else:
+    # built-in display
+    display = board.DISPLAY
 
 ##########################################
 # Create background bitmaps and sparklines
 ##########################################
 
 # Baseline size of the sparkline chart, in pixels.
-chartWidth = DISPLAY_WIDTH
-chartHeight = DISPLAY_HEIGHT
+chartWidth = display.width
+chartHeight = display.height
 
 
 # mySparkline1 uses a vertical y range between 0 to 10 and will contain a maximum of 40 items
