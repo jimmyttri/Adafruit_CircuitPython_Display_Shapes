@@ -15,13 +15,31 @@
 # included in the graph. When additional elements are added to the sparkline and
 # the number of items has exceeded max_items, any excess values are removed from
 # the left of the graph, and new values are added to the right.
+"""
+`sparkline`
+================================================================================
+
+Various common shapes for use with displayio - Sparkline!
+
+
+* Author(s): Kevin Matocha
+
+Implementation Notes
+--------------------
+
+**Software and Dependencies:**
+
+* Adafruit CircuitPython firmware for the supported boards:
+  https://github.com/adafruit/circuitpython/releases
+
+"""
 
 import displayio
 from adafruit_display_shapes.line import Line
 
 
 class Sparkline(displayio.Group):
-    # pylint: disable=invalid-name
+    # pylint: disable=invalid-name, too-many-arguments
     """ A sparkline graph.
 
     : param width: Width of the sparkline graph in pixels
@@ -54,8 +72,12 @@ class Sparkline(displayio.Group):
         self._spark_list = []  # list containing the values
         self.yMin = yMin  # minimum of y-axis (None: autoscale)
         self.yMax = yMax  # maximum of y-axis (None: autoscale)
-        self.yBottom = yMin  # yBottom: The actual minimum value of the vertical scale, will be updated if autorange
-        self.yTop = yMax  # yTop: The actual minimum value of the vertical scale, will be updated if autorange
+        self.yBottom = yMin
+        # yBottom: The actual minimum value of the vertical scale, will be
+        # updated if autorange
+        self.yTop = yMax
+        # yTop: The actual minimum value of the vertical scale, will be
+        # updated if autorange
         self._x = x
         self._y = y
 
@@ -65,7 +87,6 @@ class Sparkline(displayio.Group):
 
     def add_value(self, value):
         """ Add a value to the sparkline.
-        
         : param value: The value to be added to the sparkline
         """
 
@@ -121,7 +142,7 @@ class Sparkline(displayio.Group):
                 len(self._spark_list) - 1
             )  # this is a float, only make int when plotting the line
 
-            for i in range(len(self)):  # remove all items from the current group
+            for _ in range(len(self)):  # remove all items from the current group
                 self.pop()
 
             for count, value in enumerate(self._spark_list):
@@ -192,4 +213,7 @@ class Sparkline(displayio.Group):
                 last_value = value  # store value for the next iteration
 
     def values(self):
+        """Returns the values displayed on the sparkline
+        """
+
         return self._spark_list
