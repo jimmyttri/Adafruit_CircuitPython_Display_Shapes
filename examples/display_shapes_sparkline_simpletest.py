@@ -92,29 +92,29 @@ else:
 ##########################################
 
 # Baseline size of the sparkline chart, in pixels.
-chartWidth = display.width
-chartHeight = display.height
+chart_width = display.width
+chart_height = display.height
 
-# mySparkline1 uses a vertical y range between 0 to 10 and will contain a
+# sparkline1 uses a vertical y range between 0 to 10 and will contain a
 # maximum of 40 items
-mySparkline1 = Sparkline(
-    width=chartWidth, height=chartHeight, max_items=40, y_min=0, y_max=10, x=0, y=0
+sparkline1 = Sparkline(
+    width=chart_width, height=chart_height, max_items=40, y_min=0, y_max=10, x=0, y=0
 )
 
 # Create a group to hold the sparkline and append the sparkline into the
-# group (myGroup)
+# group (my_group)
 #
 # Note: In cases where display elements will overlap, then the order the elements
 # are added to the group will set which is on top.  Latter elements are displayed
 # on top of former elemtns.
-myGroup = displayio.Group(max_size=1)
+my_group = displayio.Group(max_size=1)
 
-# add the sparkline into myGroup
-myGroup.append(mySparkline1)
+# add the sparkline into my_group
+my_group.append(sparkline1)
 
 
-# Add myGroup (containing the sparkline) to the display
-display.show(myGroup)
+# Add my_group (containing the sparkline) to the display
+display.show(my_group)
 
 # Start the main loop
 while True:
@@ -125,7 +125,7 @@ while True:
     # add_value: add a new value to a sparkline
     # Note: The y-range for mySparkline1 is set to 0 to 10, so all these random
     # values (between 0 and 10) will fit within the visible range of this sparkline
-    mySparkline1.add_value(random.uniform(0, 10))
+    sparkline1.add_value(random.uniform(0, 10))
 
     # turn the display auto_refresh back on
     display.auto_refresh = True

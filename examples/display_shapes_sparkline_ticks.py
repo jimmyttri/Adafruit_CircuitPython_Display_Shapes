@@ -92,88 +92,88 @@ else:
 ##########################################
 
 # Baseline size of the sparkline chart, in pixels.
-chartWidth = display.width - 50
-chartHeight = display.height - 50
+chart_width = display.width - 50
+chart_height = display.height - 50
 
 font = terminalio.FONT
 
-lineColor = 0xFFFFFF
+line_color = 0xFFFFFF
 
 # Setup the first bitmap and sparkline
 # This sparkline has no background bitmap
 # mySparkline1 uses a vertical y range between 0 to 10 and will contain a
 # maximum of 40 items
-mySparkline1 = Sparkline(
-    width=chartWidth,
-    height=chartHeight,
+sparkline1 = Sparkline(
+    width=chart_width,
+    height=chart_height,
     max_items=40,
-    yMin=0,
-    yMax=10,
+    y_min=0,
+    y_max=10,
     x=40,
     y=30,
-    color=lineColor,
+    color=line_color,
 )
 
 # Label the y-axis range
 
-textXOffset = -10
-textLabel1a = label.Label(
-    font=font, text=str(mySparkline1.yTop), color=lineColor
+text_xoffset = -10
+text_label1a = label.Label(
+    font=font, text=str(sparkline1.y_top), color=line_color
 )  # yTop label
-textLabel1a.anchor_point = (1, 0.5)  # set the anchorpoint at right-center
-textLabel1a.anchored_position = (
-    mySparkline1.x + textXOffset,
-    mySparkline1.y,
+text_label1a.anchor_point = (1, 0.5)  # set the anchorpoint at right-center
+text_label1a.anchored_position = (
+    sparkline1.x + text_xoffset,
+    sparkline1.y,
 )  # set the text anchored position to the upper right of the graph
 
-textLabel1b = label.Label(
-    font=font, text=str(mySparkline1.yBottom), color=lineColor
+text_label1b = label.Label(
+    font=font, text=str(sparkline1.y_bottom), color=line_color
 )  # yTop label
-textLabel1b.anchor_point = (1, 0.5)  # set the anchorpoint at right-center
-textLabel1b.anchored_position = (
-    mySparkline1.x + textXOffset,
-    mySparkline1.y + chartHeight,
+text_label1b.anchor_point = (1, 0.5)  # set the anchorpoint at right-center
+text_label1b.anchored_position = (
+    sparkline1.x + text_xoffset,
+    sparkline1.y + chart_height,
 )  # set the text anchored position to the upper right of the graph
 
 
-boundingRectangle = Rect(
-    mySparkline1.x, mySparkline1.y, chartWidth + 1, chartHeight + 1, outline=lineColor
+bounding_rectangle = Rect(
+    sparkline1.x, sparkline1.y, chart_width + 1, chart_height + 1, outline=line_color
 )
 
 
 # Create a group to hold the sparkline, text, rectangle and tickmarks
-# append them into the group (myGroup)
+# append them into the group (my_group)
 #
 # Note: In cases where display elements will overlap, then the order the
 # elements are added to the group will set which is on top.  Latter elements
 # are displayed on top of former elemtns.
 
-myGroup = displayio.Group(max_size=20)
+my_group = displayio.Group(max_size=20)
 
-myGroup.append(mySparkline1)
-myGroup.append(textLabel1a)
-myGroup.append(textLabel1b)
-myGroup.append(boundingRectangle)
+my_group.append(sparkline1)
+my_group.append(text_label1a)
+my_group.append(text_label1b)
+my_group.append(bounding_rectangle)
 
-totalTicks = 10
+total_ticks = 10
 
-for i in range(totalTicks + 1):
-    xStart = mySparkline1.x - 5
-    xEnd = mySparkline1.x
-    yBoth = mySparkline1.y + i * int(round(chartHeight / (totalTicks)))
-    myGroup.append(Line(xStart, yBoth, xEnd, yBoth, color=lineColor))
-myGroup.append(
+for i in range(total_ticks + 1):
+    x_start = sparkline1.x - 5
+    x_end = sparkline1.x
+    y_both = sparkline1.y + i * int(round(chart_height / (total_ticks)))
+    my_group.append(Line(x_start, y_both, x_end, y_both, color=line_color))
+my_group.append(
     Line(
-        xStart,
-        mySparkline1.y + chartHeight,
-        xEnd,
-        mySparkline1.y + chartHeight,
-        color=lineColor,
+        x_start,
+        sparkline1.y + chart_height,
+        x_end,
+        sparkline1.y + chart_height,
+        color=line_color,
     )
 )
 
-# Set the display to show myGroup that contains the sparkline and other graphics
-display.show(myGroup)
+# Set the display to show my_group that contains the sparkline and other graphics
+display.show(my_group)
 
 # Start the main loop
 while True:
@@ -185,7 +185,7 @@ while True:
     # add_value: add a new value to a sparkline
     # Note: The y-range for mySparkline1 is set to 0 to 10, so all these random
     # values (between 0 and 10) will fit within the visible range of this sparkline
-    mySparkline1.add_value(random.uniform(0, 10))
+    sparkline1.add_value(random.uniform(0, 10))
 
     # Turn on auto_refresh for the display
     display.auto_refresh = True
