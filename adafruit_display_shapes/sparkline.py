@@ -98,6 +98,7 @@ class Sparkline(displayio.Group):
             self._spark_list.append(value)
             self.update()
 
+    # pylint: disable=no-else-return
     @staticmethod
     def _xintercept(
         x1, y1, x2, y2, horizontalY
@@ -119,7 +120,7 @@ class Sparkline(displayio.Group):
         y1 = int(self.height * (yTop - last_value) / (yTop - yBottom))
         self.append(Line(x1, y1, x2, y2, self.color))  # plot the line
 
-    # pylint: disable=invalid-name, too-many-branches
+    # pylint: disable=invalid-name, too-many-branches, too-many-nested-blocks
 
     def update(self):
         """Update the drawing of the sparkline
