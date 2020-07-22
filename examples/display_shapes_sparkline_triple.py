@@ -84,6 +84,7 @@ if "DISPLAY" not in dir(board):
 else:
     # built-in display
     display = board.DISPLAY
+    DISPLAY_WIDTH = board.DISPLAY.width
 
 ##########################################
 # Create background bitmaps and sparklines
