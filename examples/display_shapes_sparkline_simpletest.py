@@ -71,7 +71,7 @@ if "DISPLAY" not in dir(board):
         display_bus,
         width=DISPLAY_WIDTH,
         height=DISPLAY_HEIGHT,
-        rotation=180, # The rotation can be adjusted to match your configuration.
+        rotation=180,  # The rotation can be adjusted to match your configuration.
         auto_refresh=True,
         native_frames_per_second=90,
     )
@@ -105,7 +105,7 @@ myGroup = displayio.Group(max_size=1)
 myGroup.append(mySparkline1)
 
 
-# Add myGroup (containing the sparkline) to the display 
+# Add myGroup (containing the sparkline) to the display
 display.show(myGroup)
 
 # Start the main loop
@@ -119,7 +119,7 @@ while True:
     # values (between 0 and 10) will fit within the visible range of this sparkline
     mySparkline1.add_value(random.uniform(0, 10))
 
-    # turn the display auto_refresh back on 
+    # turn the display auto_refresh back on
     display.auto_refresh = True
 
     # The display seems to be less jittery if a small sleep time is provided

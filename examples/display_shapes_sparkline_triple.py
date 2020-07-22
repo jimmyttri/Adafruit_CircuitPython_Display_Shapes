@@ -75,7 +75,7 @@ if "DISPLAY" not in dir(board):
         display_bus,
         width=DISPLAY_WIDTH,
         height=DISPLAY_HEIGHT,
-        rotation=180, # The rotation can be adjusted to match your configuration.
+        rotation=180,  # The rotation can be adjusted to match your configuration.
         auto_refresh=True,
         native_frames_per_second=90,
     )

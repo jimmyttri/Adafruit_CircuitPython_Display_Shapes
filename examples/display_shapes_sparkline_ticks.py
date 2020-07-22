@@ -75,7 +75,7 @@ if "DISPLAY" not in dir(board):
         display_bus,
         width=DISPLAY_WIDTH,
         height=DISPLAY_HEIGHT,
-        rotation=180, # The rotation can be adjusted to match your configuration.
+        rotation=180,  # The rotation can be adjusted to match your configuration.
         auto_refresh=True,
         native_frames_per_second=90,
     )
@@ -91,8 +91,8 @@ else:
 ##########################################
 
 # Baseline size of the sparkline chart, in pixels.
-chartWidth = display.width-50
-chartHeight = display.height-50
+chartWidth = display.width - 50
+chartHeight = display.height - 50
 
 font = terminalio.FONT
 
@@ -190,4 +190,3 @@ while True:
     # The display seems to be less jittery if a small sleep time is provided
     # You can adjust this to see if it has any effect
     time.sleep(0.01)
-
