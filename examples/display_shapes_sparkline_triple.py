@@ -4,16 +4,16 @@
 # See the bottom for a code example using the `sparkline` Class.
 
 # # File: display_shapes_sparkline.py
-# A sparkline is a scrolling line graph, where any values added to sparkline 
+# A sparkline is a scrolling line graph, where any values added to sparkline
 # using `add_value` are plotted.
 #
-# The `sparkline` class creates an element suitable for adding to the display 
+# The `sparkline` class creates an element suitable for adding to the display
 # using `display.show(mySparkline)` or adding to a `displayio.Group` to be displayed.
 #
-# When creating the sparkline, identify the number of `max_items` that will be 
+# When creating the sparkline, identify the number of `max_items` that will be
 # included in the graph.
-# When additional elements are added to the sparkline and the number of items 
-# has exceeded max_items, any excess values are removed from the left of the 
+# When additional elements are added to the sparkline and the number of items
+# has exceeded max_items, any excess values are removed from the left of the
 # graph, and new values are added to the right.
 
 
@@ -78,7 +78,7 @@ if "DISPLAY" not in dir(board):
         display_bus,
         width=DISPLAY_WIDTH,
         height=DISPLAY_HEIGHT,
-        rotation=180, # The rotation can be adjusted to match your configuration.
+        rotation=180,  # The rotation can be adjusted to match your configuration.
         auto_refresh=True,
         native_frames_per_second=90,
     )
@@ -127,7 +127,7 @@ textLabel1b.anchored_position = (
 
 
 # Setup the second bitmap and sparkline
-# mySparkline2 uses a vertical y range between 0 to 1, and will contain a 
+# mySparkline2 uses a vertical y range between 0 to 1, and will contain a
 # maximum of 10 items
 #
 palette2 = displayio.Palette(1)  # color palette used for bitmap2 (one color)
@@ -151,11 +151,11 @@ mySparkline2 = Sparkline(
 
 # Setup the third bitmap and third sparkline
 # mySparkline3 contains a maximum of 10 items
-# since yMin and yMax are not specified, mySparkline3 uses autoranging for both 
+# since yMin and yMax are not specified, mySparkline3 uses autoranging for both
 # the top and bottom of the y-axis.
-# Note1: Any unspecified edge limit (yMin or yMax) will autorange that edge based 
+# Note1: Any unspecified edge limit (yMin or yMax) will autorange that edge based
 # on the data in the list.
-# Note2: You can read back the value of the y-axis limits by using 
+# Note2: You can read back the value of the y-axis limits by using
 # mySparkline3.yBottom or mySparkline3.yTop
 
 
@@ -197,8 +197,8 @@ textLabel3b.anchored_position = (
 # Create a group to hold the three bitmap TileGrids and the three sparklines and
 # append them into the group (myGroup)
 #
-# Note: In cases where display elements will overlap, then the order the elements 
-# are added to the group will set which is on top.  Latter elements are displayed 
+# Note: In cases where display elements will overlap, then the order the elements
+# are added to the group will set which is on top.  Latter elements are displayed
 # on top of former elemtns.
 myGroup = displayio.Group(max_size=20)
 
@@ -214,7 +214,7 @@ myGroup.append(mySparkline3)
 myGroup.append(textLabel3a)
 myGroup.append(textLabel3b)
 
-# Set the display to show myGroup that contains all the bitmap TileGrids and 
+# Set the display to show myGroup that contains all the bitmap TileGrids and
 # sparklines
 display.show(myGroup)
 
@@ -235,7 +235,7 @@ while True:
     # Note: For mySparkline2, the y-axis range is set from 0 to 1.
     # With the random values set between -1 and +2, the values will sometimes
     # be out of the y-range.  This example shows how the fixed y-range (0 to 1)
-    # will "clip" values (it will not display them) that are above or below the 
+    # will "clip" values (it will not display them) that are above or below the
     # y-range.
     mySparkline2.add_value(random.uniform(-1, 2))
 
