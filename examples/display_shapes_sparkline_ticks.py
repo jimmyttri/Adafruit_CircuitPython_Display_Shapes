@@ -26,16 +26,15 @@
 # 	add new values to sparkline `add_value`
 # 	update the sparklines `update`
 
+import random
+import time
 import board
 import displayio
 import terminalio
-import random
-import time
 from adafruit_display_shapes.sparkline import Sparkline
-from adafruit_ili9341 import ILI9341
-from adafruit_display_text import label
 from adafruit_display_shapes.line import Line
 from adafruit_display_shapes.rect import Rect
+from adafruit_display_text import label
 
 if "DISPLAY" not in dir(board):
     # Setup the LCD display with driver
@@ -54,7 +53,6 @@ if "DISPLAY" not in dir(board):
 
     while not spi.try_lock():
         spi.configure(baudrate=32000000)
-        pass
     spi.unlock()
 
     display_bus = displayio.FourWire(

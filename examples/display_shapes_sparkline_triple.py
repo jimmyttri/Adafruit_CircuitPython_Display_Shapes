@@ -32,10 +32,7 @@ import board
 import displayio
 import terminalio
 from adafruit_display_shapes.sparkline import Sparkline
-from adafruit_ili9341 import ILI9341
 from adafruit_display_text import label
-
-import gc
 
 if "DISPLAY" not in dir(board):
     # Setup the LCD display with driver
@@ -54,7 +51,6 @@ if "DISPLAY" not in dir(board):
 
     while not spi.try_lock():
         spi.configure(baudrate=32000000)
-        pass
     spi.unlock()
 
     display_bus = displayio.FourWire(
@@ -264,6 +260,3 @@ while True:
     # The display seems to be less jittery if a small sleep time is provided
     # You can adjust this to see if it has any effect
     time.sleep(0.01)
-
-    # Uncomment the next line to print the amount of available memory
-    # print('memory free: {}'.format(gc.mem_free()))
