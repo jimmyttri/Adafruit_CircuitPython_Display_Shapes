@@ -30,7 +30,6 @@ import random
 import time
 from adafruit_display_shapes.sparkline import Sparkline
 
-from adafruit_display_text import label
 
 
 # from sparkline import sparkline # use this if sparkline.py is used to define the sparkline Class
