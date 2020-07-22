@@ -34,64 +34,65 @@ from adafruit_display_text import label
 from adafruit_display_shapes.line import Line
 from adafruit_display_shapes.rect import Rect
 
-import gc
+if "DISPLAY" not in dir(board):
+    # Setup the LCD display with driver
+    # You may need to change this to match the display driver for the chipset
+    # used on your display
+    from adafruit_ili9341 import ILI9341
 
-# from sparkline import sparkline # use this if sparkline.py is used to define the sparkline Class
+    displayio.release_displays()
 
+    # setup the SPI bus
+    spi = board.SPI()
+    tft_cs = board.D9  # arbitrary, pin not used
+    tft_dc = board.D10
+    tft_backlight = board.D12
+    tft_reset = board.D11
 
-# Setup the LCD display
+    while not spi.try_lock():
+        spi.configure(baudrate=32000000)
+        pass
+    spi.unlock()
 
-displayio.release_displays()
+    display_bus = displayio.FourWire(
+        spi,
+        command=tft_dc,
+        chip_select=tft_cs,
+        reset=tft_reset,
+        baudrate=32000000,
+        polarity=1,
+        phase=1,
+    )
 
+    print("spi.frequency: {}".format(spi.frequency))
 
-# setup the SPI bus
-spi = board.SPI()
-tft_cs = board.D9  # arbitrary, pin not used
-tft_dc = board.D10
-tft_backlight = board.D12
-tft_reset = board.D11
+    # Number of pixels in the display
+    DISPLAY_WIDTH = 320
+    DISPLAY_HEIGHT = 240
 
-while not spi.try_lock():
-    spi.configure(baudrate=32000000)
-    pass
-spi.unlock()
+    # create the display
+    display = ILI9341(
+        display_bus,
+        width=DISPLAY_WIDTH,
+        height=DISPLAY_HEIGHT,
+        rotation=180,  # The rotation can be adjusted to match your configuration.
+        auto_refresh=True,
+        native_frames_per_second=90,
+    )
 
-display_bus = displayio.FourWire(
-    spi,
-    command=tft_dc,
-    chip_select=tft_cs,
-    reset=tft_reset,
-    baudrate=32000000,
-    polarity=1,
-    phase=1,
-)
-
-print("spi.frequency: {}".format(spi.frequency))
-
-# Number of pixels in the display
-DISPLAY_WIDTH = 320
-DISPLAY_HEIGHT = 240
-
-# create the display
-display = ILI9341(
-    display_bus,
-    width=DISPLAY_WIDTH,
-    height=DISPLAY_HEIGHT,
-    rotation=180,
-    auto_refresh=True,
-    native_frames_per_second=90,
-)
-
-# reset the display to show nothing.
-display.show(None)
+    # reset the display to show nothing.
+    display.show(None)
+else:
+    # built-in display
+    display = board.DISPLAY
 
 ##########################################
 # Create background bitmaps and sparklines
 ##########################################
 
 # Baseline size of the sparkline chart, in pixels.
-chartWidth = 270
-chartHeight = 180
+chartWidth = display.width - 50
+chartHeight = display.height - 50
 
 font = terminalio.FONT
 
@@ -168,30 +169,24 @@ myGroup.append(
     )
 )
 
-
-# Display myGroup that contains all the bitmap TileGrids and sparklines
+# Set the display to show myGroup that contains the sparkline and other graphics
 display.show(myGroup)
-
 
 # Start the main loop
 while True:
+
+    # Turn off auto_refresh to prevent partial updates of the screen during updates
+    # of the sparkline drawing
+    display.auto_refresh = False
 
     # add_value: add a new value to a sparkline
     # Note: The y-range for mySparkline1 is set to 0 to 10, so all these random
     # values (between 0 and 10) will fit within the visible range of this sparkline
     mySparkline1.add_value(random.uniform(0, 10))
 
-    # Turn off auto_refresh to prevent partial updates of the screen during updates
-    # of the sparkline drawing
-    display.auto_refresh = False
-    # Update all the sparklines
-    mySparkline1.update()
     # Turn on auto_refresh for the display
     display.auto_refresh = True
 
     # The display seems to be less jittery if a small sleep time is provided
     # You can adjust this to see if it has any effect
     time.sleep(0.01)
-
-    # Uncomment the next line to print the amount of available memory
-    # print('memory free: {}'.format(gc.mem_free()))

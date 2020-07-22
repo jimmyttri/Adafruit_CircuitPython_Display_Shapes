@@ -54,7 +54,7 @@ class Sparkline(displayio.Group):
             ):  # if list is full, remove the first item
                 self._spark_list.pop(0)
             self._spark_list.append(value)
-            # self.update()
+            self.update()
 
     @staticmethod
     def _xintercept(
