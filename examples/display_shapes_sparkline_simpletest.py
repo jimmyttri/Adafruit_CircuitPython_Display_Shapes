@@ -4,17 +4,17 @@
 # See the bottom for a code example using the `sparkline` Class.
 
 # # File: display_shapes_sparkline.py
-# A sparkline is a scrolling line graph, where any values added to sparkline using 
+# A sparkline is a scrolling line graph, where any values added to sparkline using
 # `add_value` are plotted.
 #
-# The `sparkline` class creates an element suitable for adding to the display using 
+# The `sparkline` class creates an element suitable for adding to the display using
 # `display.show(mySparkline)`
 # or adding to a `displayio.Group` to be displayed.
 #
-# When creating the sparkline, identify the number of `max_items` that will be 
+# When creating the sparkline, identify the number of `max_items` that will be
 # included in the graph.
-# When additional elements are added to the sparkline and the number of items has 
-# exceeded max_items, any excess values are removed from the left of the graph, 
+# When additional elements are added to the sparkline and the number of items has
+# exceeded max_items, any excess values are removed from the left of the graph,
 # and new values are added to the right.
 
 
@@ -52,7 +52,7 @@ if "DISPLAY" not in dir(board):
 
     while not spi.try_lock():
         spi.configure(baudrate=32000000)
-    
+
     spi.unlock()
 
     display_bus = displayio.FourWire(
@@ -95,17 +95,17 @@ else:
 chartWidth = display.width
 chartHeight = display.height
 
-# mySparkline1 uses a vertical y range between 0 to 10 and will contain a 
+# mySparkline1 uses a vertical y range between 0 to 10 and will contain a
 # maximum of 40 items
 mySparkline1 = Sparkline(
     width=chartWidth, height=chartHeight, max_items=40, yMin=0, yMax=10, x=0, y=0
 )
 
-# Create a group to hold the sparkline and append the sparkline into the 
+# Create a group to hold the sparkline and append the sparkline into the
 # group (myGroup)
 #
-# Note: In cases where display elements will overlap, then the order the elements 
-# are added to the group will set which is on top.  Latter elements are displayed 
+# Note: In cases where display elements will overlap, then the order the elements
+# are added to the group will set which is on top.  Latter elements are displayed
 # on top of former elemtns.
 myGroup = displayio.Group(max_size=1)
 
