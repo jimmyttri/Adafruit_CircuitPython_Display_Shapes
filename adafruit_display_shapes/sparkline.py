@@ -39,14 +39,14 @@ from adafruit_display_shapes.line import Line
 
 
 class Sparkline(displayio.Group):
-    # pylint: disable=invalid-name, too-many-arguments
+    # pylint: disable=too-many-arguments
     """ A sparkline graph.
 
     : param width: Width of the sparkline graph in pixels
     : param height: Height of the sparkline graph in pixels
     : param max_items: Maximum number of values housed in the sparkline
-    : param yMin: Lower range for the y-axis.  Set to None for autorange.
-    : param yMax: Upper range for the y-axis.  Set to None for autorange.
+    : param y_min: Lower range for the y-axis.  Set to None for autorange.
+    : param y_max: Upper range for the y-axis.  Set to None for autorange.
     : param x: X-position on the screen, in pixels
     : param y: Y-position on the screen, in pixels
     : param color: Line color, the default value is 0xFFFFFF (WHITE)
@@ -57,8 +57,8 @@ class Sparkline(displayio.Group):
         width,
         height,
         max_items,
-        yMin=None,  # None = autoscaling
-        yMax=None,  # None = autoscaling
+        y_min=None,  # None = autoscaling
+        y_max=None,  # None = autoscaling
         x=0,
         y=0,
         color=0xFFFFFF,  # line color, default is WHITE
@@ -70,13 +70,13 @@ class Sparkline(displayio.Group):
         self.color = color  #
         self._max_items = max_items  # maximum number of items in the list
         self._spark_list = []  # list containing the values
-        self.yMin = yMin  # minimum of y-axis (None: autoscale)
-        self.yMax = yMax  # maximum of y-axis (None: autoscale)
-        self.yBottom = yMin
-        # yBottom: The actual minimum value of the vertical scale, will be
+        self.y_min = y_min  # minimum of y-axis (None: autoscale)
+        self.y_max = y_max  # maximum of y-axis (None: autoscale)
+        self.y_bottom = y_min
+        # y_bottom: The actual minimum value of the vertical scale, will be
         # updated if autorange
-        self.yTop = yMax
-        # yTop: The actual minimum value of the vertical scale, will be
+        self.y_top = y_max
+        # y_top: The actual minimum value of the vertical scale, will be
         # updated if autorange
         self._x = x
         self._y = y
@@ -101,23 +101,23 @@ class Sparkline(displayio.Group):
     # pylint: disable=no-else-return
     @staticmethod
     def _xintercept(
-        x1, y1, x2, y2, horizontalY
+        x1, y1, x2, y2, horizontal_y
     ):  # finds intercept of the line and a horizontal line at horizontalY
         slope = (y2 - y1) / (x2 - x1)
         b = y1 - slope * x1
 
-        if slope == 0 and y1 != horizontalY:  # does not intercept horizontalY
+        if slope == 0 and y1 != horizontal_y:  # does not intercept horizontalY
             return None
         else:
             xint = (
-                horizontalY - b
+                horizontal_y - b
             ) / slope  # calculate the x-intercept at position y=horizontalY
             return int(xint)
 
-    def _plotLine(self, x1, last_value, x2, value, yBottom, yTop):
+    def _plotLine(self, x1, last_value, x2, value, y_bottom, y_top):
 
-        y2 = int(self.height * (yTop - value) / (yTop - yBottom))
-        y1 = int(self.height * (yTop - last_value) / (yTop - yBottom))
+        y2 = int(self.height * (y_top - value) / (y_top - y_bottom))
+        y1 = int(self.height * (y_top - last_value) / (y_top - y_bottom))
         self.append(Line(x1, y1, x2, y2, self.color))  # plot the line
 
     # pylint: disable=invalid-name, too-many-branches, too-many-nested-blocks
@@ -128,15 +128,15 @@ class Sparkline(displayio.Group):
         """
 
         # get the y range
-        if self.yMin is None:
-            self.yBottom = min(self._spark_list)
+        if self.y_min is None:
+            self.y_bottom = min(self._spark_list)
         else:
-            self.yBottom = self.yMin
+            self.y_bottom = self.y_min
 
-        if self.yMax is None:
-            self.yTop = max(self._spark_list)
+        if self.y_max is None:
+            self.y_top = max(self._spark_list)
         else:
-            self.yTop = self.yMax
+            self.y_top = self.y_max
 
         if len(self._spark_list) > 2:
             xpitch = self.width / (
@@ -155,29 +155,29 @@ class Sparkline(displayio.Group):
 
                     # print("x1: {}, x2: {}".format(x1,x2))
 
-                    if (self.yBottom <= last_value <= self.yTop) and (
-                        self.yBottom <= value <= self.yTop
+                    if (self.y_bottom <= last_value <= self.y_top) and (
+                        self.y_bottom <= value <= self.y_top
                     ):  # both points are in range, plot the line
                         self._plotLine(
-                            x1, last_value, x2, value, self.yBottom, self.yTop
+                            x1, last_value, x2, value, self.y_bottom, self.y_top
                         )
 
                     else:  # at least one point is out of range, clip one or both ends the line
-                        if ((last_value > self.yTop) and (value > self.yTop)) or (
-                            (last_value < self.yBottom) and (value < self.yBottom)
+                        if ((last_value > self.y_top) and (value > self.y_top)) or (
+                            (last_value < self.y_bottom) and (value < self.y_bottom)
                         ):
                             # both points are on the same side out of range: don't draw anything
                             pass
                         else:
-                            xintBottom = self._xintercept(
-                                x1, last_value, x2, value, self.yBottom
+                            xint_bottom = self._xintercept(
+                                x1, last_value, x2, value, self.y_bottom
                             )  # get possible new x intercept points
-                            xintTop = self._xintercept(
-                                x1, last_value, x2, value, self.yTop
+                            xint_top = self._xintercept(
+                                x1, last_value, x2, value, self.y_top
                             )  # on the top and bottom of range
 
-                            if (xintBottom is None) or (
-                                xintTop is None
+                            if (xint_bottom is None) or (
+                                xint_top is None
                             ):  # out of range doublecheck
                                 pass
                             else:
@@ -188,27 +188,27 @@ class Sparkline(displayio.Group):
                                 adj_value = value
 
                                 if value > last_value:  # slope is positive
-                                    if xintBottom >= x1:  # bottom is clipped
-                                        adj_x1 = xintBottom
-                                        adj_last_value = self.yBottom  # y1
-                                    if xintTop <= x2:  # top is clipped
-                                        adj_x2 = xintTop
-                                        adj_value = self.yTop  # y2
+                                    if xint_bottom >= x1:  # bottom is clipped
+                                        adj_x1 = xint_bottom
+                                        adj_last_value = self.y_bottom  # y1
+                                    if xint_top <= x2:  # top is clipped
+                                        adj_x2 = xint_top
+                                        adj_value = self.y_top  # y2
                                 else:  # slope is negative
-                                    if xintTop >= x1:  # top is clipped
-                                        adj_x1 = xintTop
-                                        adj_last_value = self.yTop  # y1
-                                    if xintBottom <= x2:  # bottom is clipped
-                                        adj_x2 = xintBottom
-                                        adj_value = self.yBottom  # y2
+                                    if xint_top >= x1:  # top is clipped
+                                        adj_x1 = xint_top
+                                        adj_last_value = self.y_top  # y1
+                                    if xint_bottom <= x2:  # bottom is clipped
+                                        adj_x2 = xint_bottom
+                                        adj_value = self.y_bottom  # y2
 
                                 self._plotLine(
                                     adj_x1,
                                     adj_last_value,
                                     adj_x2,
                                     adj_value,
-                                    self.yBottom,
-                                    self.yTop,
+                                    self.y_bottom,
+                                    self.y_top,
                                 )
 
                 last_value = value  # store value for the next iteration

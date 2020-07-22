@@ -98,7 +98,7 @@ chartHeight = display.height
 # mySparkline1 uses a vertical y range between 0 to 10 and will contain a
 # maximum of 40 items
 mySparkline1 = Sparkline(
-    width=chartWidth, height=chartHeight, max_items=40, yMin=0, yMax=10, x=0, y=0
+    width=chartWidth, height=chartHeight, max_items=40, y_min=0, y_max=10, x=0, y=0
 )
 
 # Create a group to hold the sparkline and append the sparkline into the
