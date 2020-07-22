@@ -120,7 +120,7 @@ class Sparkline(displayio.Group):
         y_1 = int(self.height * (y_top - last_value) / (y_top - y_bottom))
         self.append(Line(x_1, y_1, x_2, y_2, self.color))  # plot the line
 
-    # pylint: disable=invalid-name, too-many-branches, too-many-nested-blocks
+    # pylint: disable= too-many-branches, too-many-nested-blocks
 
     def update(self):
         """Update the drawing of the sparkline
