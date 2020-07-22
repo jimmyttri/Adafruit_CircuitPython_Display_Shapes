@@ -4,20 +4,36 @@
 # See the bottom for a code example using the `sparkline` Class.
 
 # # File: display_shapes_sparkline.py
-# A sparkline is a scrolling line graph, where any values added to sparkline using `add_value` are plotted.
+# A sparkline is a scrolling line graph, where any values added to sparkline using `
+# add_value` are plotted.
 #
-# The `sparkline` class creates an element suitable for adding to the display using `display.show(mySparkline)`
+# The `sparkline` class creates an element suitable for adding to the display using
+# `display.show(mySparkline)`
 # or adding to a `displayio.Group` to be displayed.
 #
-# When creating the sparkline, identify the number of `max_items` that will be included in the graph.
-# When additional elements are added to the sparkline and the number of items has exceeded max_items,
-# any excess values are removed from the left of the graph, and new values are added to the right.
+# When creating the sparkline, identify the number of `max_items` that will be
+# included in the graph. When additional elements are added to the sparkline and
+# the number of items has exceeded max_items, any excess values are removed from
+# the left of the graph, and new values are added to the right.
 
 import displayio
 from adafruit_display_shapes.line import Line
 
 
 class Sparkline(displayio.Group):
+    # pylint: disable=invalid-name
+    """ A sparkline graph.
+
+    : param width: Width of the sparkline graph in pixels
+    : param height: Height of the sparkline graph in pixels
+    : param max_items: Maximum number of values housed in the sparkline
+    : param yMin: Lower range for the y-axis.  Set to None for autorange.
+    : param yMax: Upper range for the y-axis.  Set to None for autorange.
+    : param x: X-position on the screen, in pixels
+    : param y: Y-position on the screen, in pixels
+    : param color: Line color, the default value is 0xFFFFFF (WHITE)
+    """
+
     def __init__(
         self,
         width,
@@ -48,6 +64,11 @@ class Sparkline(displayio.Group):
         )  # self is a group of lines
 
     def add_value(self, value):
+        """ Add a value to the sparkline.
+        
+        : param value: The value to be added to the sparkline
+        """
+
         if value is not None:
             if (
                 len(self._spark_list) >= self._max_items
@@ -77,16 +98,20 @@ class Sparkline(displayio.Group):
         y1 = int(self.height * (yTop - last_value) / (yTop - yBottom))
         self.append(Line(x1, y1, x2, y2, self.color))  # plot the line
 
+    # pylint: disable=invalid-name, too-many-branches
+
     def update(self):
-        # What to do if there is 0 or 1 element?
+        """Update the drawing of the sparkline
+
+        """
 
         # get the y range
-        if self.yMin == None:
+        if self.yMin is None:
             self.yBottom = min(self._spark_list)
         else:
             self.yBottom = self.yMin
 
-        if self.yMax == None:
+        if self.yMax is None:
             self.yTop = max(self._spark_list)
         else:
             self.yTop = self.yMax
