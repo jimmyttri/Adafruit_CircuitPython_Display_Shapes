@@ -34,54 +34,57 @@ from adafruit_display_text import label
 
 import gc
 
-# from sparkline import sparkline # use this if sparkline.py is used to define the sparkline Class
+if "DISPLAY" not in dir(board):
+    # Setup the LCD display with driver
+    # You may need to change this to match the display driver for the chipset
+    # used on your display
+    from adafruit_ili9341 import ILI9341
 
+    displayio.release_displays()
 
-# Setup the LCD display
+    # setup the SPI bus
+    spi = board.SPI()
+    tft_cs = board.D9  # arbitrary, pin not used
+    tft_dc = board.D10
+    tft_backlight = board.D12
+    tft_reset = board.D11
 
-displayio.release_displays()
+    while not spi.try_lock():
+        spi.configure(baudrate=32000000)
+        pass
+    spi.unlock()
 
+    display_bus = displayio.FourWire(
+        spi,
+        command=tft_dc,
+        chip_select=tft_cs,
+        reset=tft_reset,
+        baudrate=32000000,
+        polarity=1,
+        phase=1,
+    )
 
-# setup the SPI bus
-spi = board.SPI()
-tft_cs = board.D9  # arbitrary, pin not used
-tft_dc = board.D10
-tft_backlight = board.D12
-tft_reset = board.D11
+    print("spi.frequency: {}".format(spi.frequency))
 
-while not spi.try_lock():
-    spi.configure(baudrate=32000000)
-    pass
-spi.unlock()
+    # Number of pixels in the display
+    DISPLAY_WIDTH = 320
+    DISPLAY_HEIGHT = 240
 
-display_bus = displayio.FourWire(
-    spi,
-    command=tft_dc,
-    chip_select=tft_cs,
-    reset=tft_reset,
-    baudrate=32000000,
-    polarity=1,
-    phase=1,
-)
+    # create the display
+    display = ILI9341(
+        display_bus,
+        width=DISPLAY_WIDTH,
+        height=DISPLAY_HEIGHT,
+        rotation=180, # The rotation can be adjusted to match your configuration.
+        auto_refresh=True,
+        native_frames_per_second=90,
+    )
 
-print("spi.frequency: {}".format(spi.frequency))
-
-# Number of pixels in the display
-DISPLAY_WIDTH = 320
-DISPLAY_HEIGHT = 240
-
-# create the display
-display = ILI9341(
-    display_bus,
-    width=DISPLAY_WIDTH,
-    height=DISPLAY_HEIGHT,
-    rotation=180,
-    auto_refresh=True,
-    native_frames_per_second=90,
-)
-
-# reset the display to show nothing.
-display.show(None)
+    # reset the display to show nothing.
+    display.show(None)
+else:
+    # built-in display
+    display = board.DISPLAY
 
 ##########################################
 # Create background bitmaps and sparklines
@@ -165,7 +168,6 @@ mySparkline3 = Sparkline(
     color=0xFFFFFF,
 )
 
-
 # Initialize the y-axis labels for mySparkline3 with no text
 textLabel3a = label.Label(
     font=font, text="", color=0x11FF44, max_glyphs=20
@@ -205,15 +207,17 @@ myGroup.append(mySparkline3)
 myGroup.append(textLabel3a)
 myGroup.append(textLabel3b)
 
-
-# Display myGroup that contains all the bitmap TileGrids and sparklines
+# Set the display to show myGroup that contains all the bitmap TileGrids and sparklines
 display.show(myGroup)
-
 
 i = 0  # This is a counter for changing the random values for mySparkline3
 
 # Start the main loop
 while True:
+
+    # Turn off auto_refresh to prevent partial updates of the screen during updates
+    # of the sparklines
+    display.auto_refresh = False
 
     # add_value: add a new value to a sparkline
     # Note: The y-range for mySparkline1 is set to -1 to 1.25, so all these random
@@ -245,13 +249,6 @@ while True:
     if i > 30:  # After 30 times through the loop, reset the counter
         i = 0
 
-    # Turn off auto_refresh to prevent partial updates of the screen during updates
-    # of the sparkline drawing
-    display.auto_refresh = False
-    # Update all the sparklines
-    mySparkline1.update()
-    mySparkline2.update()
-    mySparkline3.update()
     # Turn on auto_refresh for the display
     display.auto_refresh = True
 

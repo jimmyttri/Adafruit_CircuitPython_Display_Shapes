@@ -30,12 +30,10 @@ import random
 import time
 from adafruit_display_shapes.sparkline import Sparkline
 
-
-
-# from sparkline import sparkline # use this if sparkline.py is used to define the sparkline Class
-
 if "DISPLAY" not in dir(board):
     # Setup the LCD display with driver
+    # You may need to change this to match the display driver for the chipset
+    # used on your display
     from adafruit_ili9341 import ILI9341
 
     displayio.release_displays()
@@ -73,7 +71,7 @@ if "DISPLAY" not in dir(board):
         display_bus,
         width=DISPLAY_WIDTH,
         height=DISPLAY_HEIGHT,
-        rotation=180,
+        rotation=180, # The rotation can be adjusted to match your configuration.
         auto_refresh=True,
         native_frames_per_second=90,
     )
@@ -92,12 +90,10 @@ else:
 chartWidth = display.width
 chartHeight = display.height
 
-
 # mySparkline1 uses a vertical y range between 0 to 10 and will contain a maximum of 40 items
 mySparkline1 = Sparkline(
     width=chartWidth, height=chartHeight, max_items=40, yMin=0, yMax=10, x=0, y=0
 )
-
 
 # Create a group to hold the sparkline and append the sparkline into the group (myGroup)
 #
@@ -105,23 +101,25 @@ mySparkline1 = Sparkline(
 # group will set which is on top.  Latter elements are displayed on top of former elemtns.
 myGroup = displayio.Group(max_size=1)
 
+# add the sparkline into myGroup
 myGroup.append(mySparkline1)
 
 
-# Display myGroup that contains the sparkline
+# Add myGroup (containing the sparkline) to the display 
 display.show(myGroup)
-
 
 # Start the main loop
 while True:
+
+    # turn off the auto_refresh of the display while modifying the sparkline
+    display.auto_refresh = False
 
     # add_value: add a new value to a sparkline
     # Note: The y-range for mySparkline1 is set to 0 to 10, so all these random
     # values (between 0 and 10) will fit within the visible range of this sparkline
     mySparkline1.add_value(random.uniform(0, 10))
 
-    display.auto_refresh = False
-    mySparkline1.update()
+    # turn the display auto_refresh back on 
     display.auto_refresh = True
 
     # The display seems to be less jittery if a small sleep time is provided
