@@ -101,12 +101,12 @@ class Sparkline(displayio.Group):
     # pylint: disable=no-else-return
     @staticmethod
     def _xintercept(
-        x1, y1, x2, y2, horizontal_y
+        x_1, y_1, x_2, y_2, horizontal_y
     ):  # finds intercept of the line and a horizontal line at horizontalY
-        slope = (y2 - y1) / (x2 - x1)
-        b = y1 - slope * x1
+        slope = (y_2 - y_1) / (x_2 - x_1)
+        b = y_1 - slope * x_1
 
-        if slope == 0 and y1 != horizontal_y:  # does not intercept horizontalY
+        if slope == 0 and y_1 != horizontal_y:  # does not intercept horizontalY
             return None
         else:
             xint = (
@@ -114,11 +114,11 @@ class Sparkline(displayio.Group):
             ) / slope  # calculate the x-intercept at position y=horizontalY
             return int(xint)
 
-    def _plotLine(self, x1, last_value, x2, value, y_bottom, y_top):
+    def _plotline(self, x_1, last_value, x_2, value, y_bottom, y_top):
 
-        y2 = int(self.height * (y_top - value) / (y_top - y_bottom))
-        y1 = int(self.height * (y_top - last_value) / (y_top - y_bottom))
-        self.append(Line(x1, y1, x2, y2, self.color))  # plot the line
+        y_2 = int(self.height * (y_top - value) / (y_top - y_bottom))
+        y_1 = int(self.height * (y_top - last_value) / (y_top - y_bottom))
+        self.append(Line(x_1, y_1, x_2, y_2, self.color))  # plot the line
 
     # pylint: disable=invalid-name, too-many-branches, too-many-nested-blocks
 
@@ -150,16 +150,14 @@ class Sparkline(displayio.Group):
                 if count == 0:
                     pass  # don't draw anything for a first point
                 else:
-                    x2 = int(xpitch * count)
-                    x1 = int(xpitch * (count - 1))
-
-                    # print("x1: {}, x2: {}".format(x1,x2))
+                    x_2 = int(xpitch * count)
+                    x_1 = int(xpitch * (count - 1))
 
                     if (self.y_bottom <= last_value <= self.y_top) and (
                         self.y_bottom <= value <= self.y_top
                     ):  # both points are in range, plot the line
-                        self._plotLine(
-                            x1, last_value, x2, value, self.y_bottom, self.y_top
+                        self._plotline(
+                            x_1, last_value, x_2, value, self.y_bottom, self.y_top
                         )
 
                     else:  # at least one point is out of range, clip one or both ends the line
@@ -170,10 +168,10 @@ class Sparkline(displayio.Group):
                             pass
                         else:
                             xint_bottom = self._xintercept(
-                                x1, last_value, x2, value, self.y_bottom
+                                x_1, last_value, x_2, value, self.y_bottom
                             )  # get possible new x intercept points
                             xint_top = self._xintercept(
-                                x1, last_value, x2, value, self.y_top
+                                x_1, last_value, x_2, value, self.y_top
                             )  # on the top and bottom of range
 
                             if (xint_bottom is None) or (
@@ -182,30 +180,30 @@ class Sparkline(displayio.Group):
                                 pass
                             else:
                                 # Initialize the adjusted values as the baseline
-                                adj_x1 = x1
+                                adj_x_1 = x_1
                                 adj_last_value = last_value
-                                adj_x2 = x2
+                                adj_x_2 = x_2
                                 adj_value = value
 
                                 if value > last_value:  # slope is positive
-                                    if xint_bottom >= x1:  # bottom is clipped
-                                        adj_x1 = xint_bottom
-                                        adj_last_value = self.y_bottom  # y1
-                                    if xint_top <= x2:  # top is clipped
-                                        adj_x2 = xint_top
-                                        adj_value = self.y_top  # y2
+                                    if xint_bottom >= x_1:  # bottom is clipped
+                                        adj_x_1 = xint_bottom
+                                        adj_last_value = self.y_bottom  # y_1
+                                    if xint_top <= x_2:  # top is clipped
+                                        adj_x_2 = xint_top
+                                        adj_value = self.y_top  # y_2
                                 else:  # slope is negative
-                                    if xint_top >= x1:  # top is clipped
-                                        adj_x1 = xint_top
-                                        adj_last_value = self.y_top  # y1
-                                    if xint_bottom <= x2:  # bottom is clipped
-                                        adj_x2 = xint_bottom
-                                        adj_value = self.y_bottom  # y2
+                                    if xint_top >= x_1:  # top is clipped
+                                        adj_x_1 = xint_top
+                                        adj_last_value = self.y_top  # y_1
+                                    if xint_bottom <= x_2:  # bottom is clipped
+                                        adj_x_2 = xint_bottom
+                                        adj_value = self.y_bottom  # y_2
 
-                                self._plotLine(
-                                    adj_x1,
+                                self._plotline(
+                                    adj_x_1,
                                     adj_last_value,
-                                    adj_x2,
+                                    adj_x_2,
                                     adj_value,
                                     self.y_bottom,
                                     self.y_top,
