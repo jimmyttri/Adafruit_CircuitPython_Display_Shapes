@@ -139,7 +139,7 @@ class Sparkline(displayio.Group):
             self.y_top = self.y_max
 
         if len(self._spark_list) > 2:
-            xpitch = self.width / (
+            xpitch = (self.width-1) / (
                 len(self._spark_list) - 1
             )  # this is a float, only make int when plotting the line
 
