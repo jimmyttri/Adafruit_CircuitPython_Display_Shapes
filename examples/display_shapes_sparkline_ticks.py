@@ -109,8 +109,8 @@ sparkline1 = Sparkline(
     max_items=40,
     y_min=0,
     y_max=10,
-    x=20,
-    y=20,
+    x=40,
+    y=30,
     color=line_color,
 )
 
