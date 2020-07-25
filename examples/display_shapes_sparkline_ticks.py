@@ -157,13 +157,12 @@ my_group.append(bounding_rectangle)
 
 total_ticks = 10
 
-for i in range(total_ticks+1):
+for i in range(total_ticks + 1):
     x_start = sparkline1.x - 5
     x_end = sparkline1.x
     y_both = int(round(sparkline1.y + (i * (chart_height) / (total_ticks))))
-    if y_both > sparkline1.y+chart_height-1:
-        y_both = sparkline1.y+chart_height-1
-    print('y_both: {}, i: {}'.format(y_both, i))
+    if y_both > sparkline1.y + chart_height - 1:
+        y_both = sparkline1.y + chart_height - 1
     my_group.append(Line(x_start, y_both, x_end, y_both, color=line_color))
 
 
