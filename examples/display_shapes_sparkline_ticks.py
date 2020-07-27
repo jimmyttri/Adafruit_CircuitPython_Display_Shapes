@@ -137,7 +137,7 @@ text_label1b.anchored_position = (
 
 
 bounding_rectangle = Rect(
-    sparkline1.x, sparkline1.y, chart_width + 1, chart_height + 1, outline=line_color
+    sparkline1.x, sparkline1.y, chart_width, chart_height, outline=line_color
 )
 
 
@@ -160,17 +160,11 @@ total_ticks = 10
 for i in range(total_ticks + 1):
     x_start = sparkline1.x - 5
     x_end = sparkline1.x
-    y_both = sparkline1.y + i * int(round(chart_height / (total_ticks)))
+    y_both = int(round(sparkline1.y + (i * (chart_height) / (total_ticks))))
+    if y_both > sparkline1.y + chart_height - 1:
+        y_both = sparkline1.y + chart_height - 1
     my_group.append(Line(x_start, y_both, x_end, y_both, color=line_color))
-my_group.append(
-    Line(
-        x_start,
-        sparkline1.y + chart_height,
-        x_end,
-        sparkline1.y + chart_height,
-        color=line_color,
-    )
-)
+
 
 # Set the display to show my_group that contains the sparkline and other graphics
 display.show(my_group)
