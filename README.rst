@@ -53,7 +53,7 @@ To install in a virtual environment in your current project:
 Usage Example
 =============
 
-..code-block:: python
+.. code-block:: python
 
     import board
     import displayio
