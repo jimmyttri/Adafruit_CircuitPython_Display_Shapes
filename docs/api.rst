@@ -15,3 +15,12 @@
 
 .. automodule:: adafruit_display_shapes.triangle
   :members:
+
+.. automodule:: adafruit_display_shapes.line
+  :members:
+
+.. automodule:: adafruit_display_shapes.polygon
+  :members:
+
+.. automodule:: adafruit_display_shapes.sparkline
+  :members:
