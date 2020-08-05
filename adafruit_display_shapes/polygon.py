@@ -100,12 +100,12 @@ class Polygon(displayio.TileGrid):
         if x0 == x1:
             if y0 > y1:
                 y0, y1 = y1, y0
-            for _h in range(y0, y1):
+            for _h in range(y0, y1 + 1):
                 self._bitmap[x0, _h] = color
         elif y0 == y1:
             if x0 > x1:
                 x0, x1 = x1, x0
-            for _w in range(x0, x1):
+            for _w in range(x0, x1 + 1):
                 self._bitmap[_w, y0] = color
         else:
             steep = abs(y1 - y0) > abs(x1 - x0)
