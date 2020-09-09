@@ -31,8 +31,9 @@ import time
 import board
 import displayio
 import terminalio
-from adafruit_display_shapes.sparkline import Sparkline
 from adafruit_display_text import label
+from adafruit_display_shapes.sparkline import Sparkline
+
 
 if "DISPLAY" not in dir(board):
     # Setup the LCD display with driver
