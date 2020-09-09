@@ -212,6 +212,6 @@ class Sparkline(displayio.Group):
                 last_value = value  # store value for the next iteration
 
     def values(self):
-        """Returns the values displayed on the sparkline"""
+        """Returns the values displayed on the sparkline."""
 
         return self._spark_list
