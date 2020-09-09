@@ -40,7 +40,7 @@ from adafruit_display_shapes.line import Line
 
 class Sparkline(displayio.Group):
     # pylint: disable=too-many-arguments
-    """ A sparkline graph.
+    """A sparkline graph.
 
     :param width: Width of the sparkline graph in pixels
     :param height: Height of the sparkline graph in pixels
@@ -86,7 +86,7 @@ class Sparkline(displayio.Group):
         )  # self is a group of lines
 
     def add_value(self, value):
-        """ Add a value to the sparkline.
+        """Add a value to the sparkline.
         :param value: The value to be added to the sparkline
         """
 
