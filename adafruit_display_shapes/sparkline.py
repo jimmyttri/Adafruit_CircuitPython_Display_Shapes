@@ -123,9 +123,7 @@ class Sparkline(displayio.Group):
     # pylint: disable= too-many-branches, too-many-nested-blocks
 
     def update(self):
-        """Update the drawing of the sparkline
-
-        """
+        """Update the drawing of the sparkline."""
 
         # get the y range
         if self.y_min is None:
