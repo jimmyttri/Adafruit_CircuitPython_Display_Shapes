@@ -31,10 +31,11 @@ import time
 import board
 import displayio
 import terminalio
+from adafruit_display_text import label
 from adafruit_display_shapes.sparkline import Sparkline
 from adafruit_display_shapes.line import Line
 from adafruit_display_shapes.rect import Rect
-from adafruit_display_text import label
+
 
 if "DISPLAY" not in dir(board):
     # Setup the LCD display with driver

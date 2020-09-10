@@ -40,16 +40,16 @@ from adafruit_display_shapes.line import Line
 
 class Sparkline(displayio.Group):
     # pylint: disable=too-many-arguments
-    """ A sparkline graph.
+    """A sparkline graph.
 
-    : param width: Width of the sparkline graph in pixels
-    : param height: Height of the sparkline graph in pixels
-    : param max_items: Maximum number of values housed in the sparkline
-    : param y_min: Lower range for the y-axis.  Set to None for autorange.
-    : param y_max: Upper range for the y-axis.  Set to None for autorange.
-    : param x: X-position on the screen, in pixels
-    : param y: Y-position on the screen, in pixels
-    : param color: Line color, the default value is 0xFFFFFF (WHITE)
+    :param width: Width of the sparkline graph in pixels
+    :param height: Height of the sparkline graph in pixels
+    :param max_items: Maximum number of values housed in the sparkline
+    :param y_min: Lower range for the y-axis.  Set to None for autorange.
+    :param y_max: Upper range for the y-axis.  Set to None for autorange.
+    :param x: X-position on the screen, in pixels
+    :param y: Y-position on the screen, in pixels
+    :param color: Line color, the default value is 0xFFFFFF (WHITE)
     """
 
     def __init__(
@@ -86,8 +86,8 @@ class Sparkline(displayio.Group):
         )  # self is a group of lines
 
     def add_value(self, value):
-        """ Add a value to the sparkline.
-        : param value: The value to be added to the sparkline
+        """Add a value to the sparkline.
+        :param value: The value to be added to the sparkline
         """
 
         if value is not None:
@@ -123,9 +123,7 @@ class Sparkline(displayio.Group):
     # pylint: disable= too-many-branches, too-many-nested-blocks
 
     def update(self):
-        """Update the drawing of the sparkline
-
-        """
+        """Update the drawing of the sparkline."""
 
         # get the y range
         if self.y_min is None:
@@ -212,7 +210,6 @@ class Sparkline(displayio.Group):
                 last_value = value  # store value for the next iteration
 
     def values(self):
-        """Returns the values displayed on the sparkline
-        """
+        """Returns the values displayed on the sparkline."""
 
         return self._spark_list
