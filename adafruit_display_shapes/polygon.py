@@ -127,7 +127,7 @@ class Polygon(displayio.TileGrid):
             else:
                 ystep = -1
 
-            for x in range(x0, x1):
+            for x in range(x0, x1 + 1):
                 if steep:
                     self._bitmap[y0, x] = color
                 else:
