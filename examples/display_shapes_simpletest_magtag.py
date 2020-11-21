@@ -1,6 +1,3 @@
-"""
-Simpletest example adapted for use on the MagTag
-"""
 import board
 import displayio
 from adafruit_display_shapes.rect import Rect
@@ -50,10 +47,10 @@ polygon = Polygon(
 )
 splash.append(polygon)
 
-triangle = Triangle(170, 20, 140, 90, 210, 100, fill=0xFFFFFF, outline=0x000000)
+triangle = Triangle(170, 20, 140, 90, 210, 100, fill=0x999999, outline=0x000000)
 splash.append(triangle)
 
-rect = Rect(80, 20, 41, 41, fill=0x0)
+rect = Rect(80, 20, 41, 41, fill=0x999999, outline=0x666666)
 splash.append(rect)
 
 circle = Circle(100, 100, 20, fill=0xFFFFFF, outline=0x000000)
@@ -62,7 +59,7 @@ splash.append(circle)
 rect2 = Rect(70, 85, 61, 30, outline=0x0, stroke=3)
 splash.append(rect2)
 
-roundrect = RoundRect(10, 10, 61, 51, 10, fill=0x000000, outline=0x000000, stroke=6)
+roundrect = RoundRect(10, 10, 61, 51, 10, fill=0x666666, outline=0x000000, stroke=6)
 splash.append(roundrect)
 
 display.refresh()
