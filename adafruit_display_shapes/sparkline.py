@@ -1,5 +1,8 @@
+# SPDX-FileCopyrightText: 2020 Kevin Matocha
+#
+# SPDX-License-Identifier: MIT
+
 # class of sparklines in CircuitPython
-# created by Kevin Matocha - Copyright 2020 (C)
 
 # See the bottom for a code example using the `sparkline` Class.
 

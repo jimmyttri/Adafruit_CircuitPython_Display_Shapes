@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
 # class of sparklines in CircuitPython
 # created by Kevin Matocha - Copyright 2020 (C)
 
