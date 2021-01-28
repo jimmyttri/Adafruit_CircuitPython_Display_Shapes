@@ -88,6 +88,9 @@ class Sparkline(displayio.Group):
             max_size=self._max_items - 1, x=x, y=y
         )  # self is a group of lines
 
+    def clear_values(self):
+        self._spark_list = []
+
     def add_value(self, value):
         """Add a value to the sparkline.
         :param value: The value to be added to the sparkline
@@ -116,7 +119,7 @@ class Sparkline(displayio.Group):
                 horizontal_y - b
             ) / slope  # calculate the x-intercept at position y=horizontalY
             return int(xint)
-
+        
     def _plotline(self, x_1, last_value, x_2, value, y_bottom, y_top):
 
         y_2 = int(self.height * (y_top - value) / (y_top - y_bottom))
