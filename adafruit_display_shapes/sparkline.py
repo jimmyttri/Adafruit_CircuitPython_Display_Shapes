@@ -89,7 +89,11 @@ class Sparkline(displayio.Group):
         )  # self is a group of lines
 
     def clear_values(self):
-        self._spark_list = []
+        """Removes all values from the _spark_list list and removes all lines in the group"""
+
+        for _ in range(len(self)):  # remove all items from the current group
+            self.pop()
+        self._spark_list = []  # empty the list
 
     def add_value(self, value):
         """Add a value to the sparkline.
