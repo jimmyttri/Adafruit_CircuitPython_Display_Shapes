@@ -1,5 +1,8 @@
+# SPDX-FileCopyrightText: 2020 Kevin Matocha
+#
+# SPDX-License-Identifier: MIT
+
 # class of sparklines in CircuitPython
-# created by Kevin Matocha - Copyright 2020 (C)
 
 # See the bottom for a code example using the `sparkline` Class.
 
@@ -33,6 +36,8 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+
+#pylint: disable=too-many-instance-attributes
 
 import displayio
 from adafruit_display_shapes.line import Line
@@ -84,6 +89,13 @@ class Sparkline(displayio.Group):
         super().__init__(
             max_size=self._max_items - 1, x=x, y=y
         )  # self is a group of lines
+
+    def clear_values(self):
+        """Removes all values from the _spark_list list and removes all lines in the group"""
+
+        for _ in range(len(self)):  # remove all items from the current group
+            self.pop()
+        self._spark_list = []  # empty the list
 
     def add_value(self, value):
         """Add a value to the sparkline.
