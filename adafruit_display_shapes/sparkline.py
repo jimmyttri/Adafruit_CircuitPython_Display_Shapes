@@ -123,7 +123,7 @@ class Sparkline(displayio.Group):
                 horizontal_y - b
             ) / slope  # calculate the x-intercept at position y=horizontalY
             return int(xint)
-        
+
     def _plotline(self, x_1, last_value, x_2, value, y_bottom, y_top):
 
         y_2 = int(self.height * (y_top - value) / (y_top - y_bottom))
