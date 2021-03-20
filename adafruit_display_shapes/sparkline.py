@@ -37,6 +37,8 @@ Implementation Notes
 
 """
 
+#pylint: disable=too-many-instance-attributes
+
 import displayio
 from adafruit_display_shapes.line import Line
 
