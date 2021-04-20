@@ -53,3 +53,22 @@ class Circle(RoundRect):
             outline=outline,
             stroke=stroke,
         )
+        self.r = r
+        
+    @property
+    def x0(self):
+        """The x-position of the center of the circle."""
+        return self.x + self.r
+        
+    @property
+    def y0(self):
+        """The y-position of the center of the circle."""
+        return self.y + self.r
+    
+    @x0.setter
+    def x0(self, x0):
+        self.x = x0 - self.r
+        
+    @y0.setter
+    def y0(self, y0):
+        self.y = y0 - self.r
