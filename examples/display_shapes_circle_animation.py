@@ -17,7 +17,7 @@ from adafruit_display_shapes.circle import Circle
 display = board.DISPLAY
 
 # Make the display context
-main_group = displayio.Group(max_size=2)
+main_group = displayio.Group()
 
 # Make a background color fill
 color_bitmap = displayio.Bitmap(display.width, display.height, 1)

@@ -61,7 +61,7 @@ Usage Example
     from adafruit_display_shapes.circle import Circle
     from adafruit_display_shapes.roundrect import RoundRect
 
-    splash = displayio.Group(max_size=10)
+    splash = displayio.Group()
     board.DISPLAY.show(splash)
 
     color_bitmap = displayio.Bitmap(320, 240, 1)

@@ -206,8 +206,8 @@ text_label3b.anchored_position = (
 #
 # Note: In cases where display elements will overlap, then the order the elements
 # are added to the group will set which is on top.  Latter elements are displayed
-# on top of former elemtns.
-my_group = displayio.Group(max_size=20)
+# on top of former elements.
+my_group = displayio.Group()
 
 my_group.append(sparkline1)
 my_group.append(text_label1a)
