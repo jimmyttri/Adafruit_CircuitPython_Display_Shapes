@@ -109,8 +109,8 @@ sparkline1 = Sparkline(
 #
 # Note: In cases where display elements will overlap, then the order the elements
 # are added to the group will set which is on top.  Latter elements are displayed
-# on top of former elemtns.
-my_group = displayio.Group(max_size=1)
+# on top of former elements.
+my_group = displayio.Group()
 
 # add the sparkline into my_group
 my_group.append(sparkline1)

@@ -86,9 +86,7 @@ class Sparkline(displayio.Group):
         self._x = x
         self._y = y
 
-        super().__init__(
-            max_size=self._max_items - 1, x=x, y=y
-        )  # self is a group of lines
+        super().__init__(x=x, y=y)  # self is a group of lines
 
     def clear_values(self):
         """Removes all values from the _spark_list list and removes all lines in the group"""

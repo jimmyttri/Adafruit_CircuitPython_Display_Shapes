@@ -16,7 +16,7 @@ from adafruit_display_shapes.polygon import Polygon
 display = board.DISPLAY
 
 # Make the display context
-splash = displayio.Group(max_size=20)
+splash = displayio.Group()
 display.show(splash)
 
 # Make a background color fill
