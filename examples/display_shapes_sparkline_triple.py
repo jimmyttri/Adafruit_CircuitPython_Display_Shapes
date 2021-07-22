@@ -183,18 +183,14 @@ sparkline3 = Sparkline(
 )
 
 # Initialize the y-axis labels for mySparkline3 with no text
-text_label3a = label.Label(
-    font=font, text="", color=0x11FF44, max_glyphs=20
-)  # y_top label
+text_label3a = label.Label(font=font, text="", color=0x11FF44)  # y_top label
 text_label3a.anchor_point = (0, 0.5)  # set the anchorpoint
 text_label3a.anchored_position = (
     sparkline3.width,
     120,
 )  # set the text anchored position to the upper right of the graph
 
-text_label3b = label.Label(
-    font=font, text="", color=0x11FF44, max_glyphs=20
-)  # y_bottom label
+text_label3b = label.Label(font=font, text="", color=0x11FF44)  # y_bottom label
 text_label3b.anchor_point = (0, 0.5)  # set the anchorpoint
 text_label3b.anchored_position = (
     sparkline3.width,
