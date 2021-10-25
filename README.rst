@@ -90,6 +90,11 @@ Usage Example
         pass
 
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/display-shapes/en/latest/>`_.
+
 Contributing
 ============
 
