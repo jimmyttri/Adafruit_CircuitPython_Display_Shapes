@@ -50,4 +50,3 @@ class Line(Polygon):
     @color.setter
     def color(self, color):
         self.outline = color
-        return
