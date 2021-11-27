@@ -170,3 +170,17 @@ class RoundRect(displayio.TileGrid):
         else:
             self._palette[1] = color
             self._palette.make_opaque(2)
+
+    @property
+    def width(self) -> int:
+        """
+        :return: the width of the rounded rectangle in pixels
+        """
+        return self._bitmap.width
+
+    @property
+    def height(self) -> int:
+        """
+        :return: the height of the rounded rectangle in pixels
+        """
+        return self._bitmap.height

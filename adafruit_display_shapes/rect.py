@@ -95,3 +95,17 @@ class Rect(displayio.TileGrid):
         else:
             self._palette[1] = color
             self._palette.make_opaque(1)
+
+    @property
+    def width(self) -> int:
+        """
+        :return: the width of the rectangle in pixels
+        """
+        return self._bitmap.width
+
+    @property
+    def height(self) -> int:
+        """
+        :return: the height of the rectangle in pixels
+        """
+        return self._bitmap.height
