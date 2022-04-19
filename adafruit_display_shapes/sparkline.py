@@ -146,6 +146,11 @@ class Sparkline(displayio.Group):
         else:
             self.y_top = self.y_max
 
+        # Guard for y_top and y_bottom being the same
+        if self.y_top == self.y_bottom:
+            self.y_bottom -= 10
+            self.y_top += 10
+
         if len(self._spark_list) > 2:
             xpitch = (self.width - 1) / (
                 len(self._spark_list) - 1
