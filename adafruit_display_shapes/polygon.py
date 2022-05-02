@@ -21,7 +21,7 @@ Implementation Notes
 
 """
 try:
-    from typing import Tuple, Optional
+    from typing import List, Tuple, Optional
 except ImportError:
     pass
 
@@ -40,7 +40,7 @@ class Polygon(displayio.TileGrid):
                     ``None`` for no outline.
     """
 
-    def __init__(self, points: list[Tuple[int, int]], *, outline: Optional[int] = None) -> None:
+    def __init__(self, points: List[Tuple[int, int]], *, outline: Optional[int] = None) -> None:
         xs = []
         ys = []
 
@@ -81,7 +81,7 @@ class Polygon(displayio.TileGrid):
         )
 
     # pylint: disable=invalid-name, too-many-locals, too-many-branches
-    def _line(self, x0: int, y0: int, x1: int, y1: int, color: Optional[int]) -> None:
+    def _line(self, x0: int, y0: int, x1: int, y1: int, color: Optional[int]):
         if x0 == x1:
             if y0 > y1:
                 y0, y1 = y1, y0

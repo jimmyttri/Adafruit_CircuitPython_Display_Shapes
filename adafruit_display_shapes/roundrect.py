@@ -98,7 +98,7 @@ class RoundRect(displayio.TileGrid):
         x_offset: int = 0,
         y_offset: int = 0,
         stroke: int = 1,
-        corner_flags: Optional[int] = 0xF,
+        corner_flags: int = 0xF,
         fill: bool = False
     ):
         f = 1 - r

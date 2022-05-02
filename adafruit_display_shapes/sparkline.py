@@ -37,7 +37,7 @@ Implementation Notes
 
 """
 try:
-    from typing import Optional
+    from typing import List, Optional
 except ImportError:
     pass
 
@@ -66,10 +66,10 @@ class Sparkline(displayio.Group):
         width: int,
         height: int,
         max_items: int,
-        y_min: Optional[int] = None,  # None = autoscaling
-        y_max: Optional[int] = None,  # None = autoscaling
-        x: int = 0,
-        y: int= 0,
+        y_min: Optional[float] = None,  # None = autoscaling
+        y_max: Optional[float] = None,  # None = autoscaling
+        x: float = 0.0,
+        y: float = 0.0,
         color: Optional[int] = 0xFFFFFF,  # line color, default is WHITE
     ) -> None:
 
@@ -78,7 +78,7 @@ class Sparkline(displayio.Group):
         self.height = height  # in pixels
         self.color = color  #
         self._max_items = max_items  # maximum number of items in the list
-        self._spark_list = []  # list containing the values
+        self._spark_list: List[float] = []  # list containing the values
         self.y_min = y_min  # minimum of y-axis (None: autoscale)
         self.y_max = y_max  # maximum of y-axis (None: autoscale)
         self.y_bottom = y_min
@@ -99,7 +99,7 @@ class Sparkline(displayio.Group):
             self.pop()
         self._spark_list = []  # empty the list
 
-    def add_value(self, value: Optional[float]) -> float:
+    def add_value(self, value: Optional[float]):
         """Add a value to the sparkline.
         :param value: The value to be added to the sparkline
         """
@@ -115,8 +115,8 @@ class Sparkline(displayio.Group):
     # pylint: disable=no-else-return
     @staticmethod
     def _xintercept(
-        x_1: int, y_1: int, x_2: int, y_2: int, horizontal_y: int
-    ):  # finds intercept of the line and a horizontal line at horizontalY
+        x_1: float, y_1: float, x_2: float, y_2: float, horizontal_y: float
+    ) -> Optional[int]:  # finds intercept of the line and a horizontal line at horizontalY
         slope = (y_2 - y_1) / (x_2 - x_1)
         b = y_1 - slope * x_1
 

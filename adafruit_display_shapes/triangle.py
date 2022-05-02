@@ -94,7 +94,7 @@ class Triangle(Polygon):
                 )
 
     # pylint: disable=invalid-name, too-many-branches
-    def _draw_filled(self, x0: int, y0: int, x1: int, y1: int, x2: int, y2: int) -> int:
+    def _draw_filled(self, x0: int, y0: int, x1: int, y1: int, x2: int, y2: int):
         if y0 == y2:  # Handle awkward all-on-same-line case as its own thing
             a = x0
             b = x0
