@@ -20,6 +20,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 from adafruit_display_shapes.polygon import Polygon
 
@@ -43,7 +47,8 @@ class Triangle(Polygon):
                     ``None`` for no outline.
     """
     # pylint: disable=too-many-locals
-    def __init__(self, x0, y0, x1, y1, x2, y2, *, fill=None, outline=None):
+    def __init__(self, x0: int, y0: int, x1: int, y1: int, x2: int, y2: int, *,
+     fill: Optional[int] = None, outline: Optional[int] = None) -> None:
         # Sort coordinates by Y order (y2 >= y1 >= y0)
         if y0 > y1:
             y0, y1 = y1, y0
@@ -89,7 +94,7 @@ class Triangle(Polygon):
                 )
 
     # pylint: disable=invalid-name, too-many-branches
-    def _draw_filled(self, x0, y0, x1, y1, x2, y2):
+    def _draw_filled(self, x0: int, y0: int, x1: int, y1: int, x2: int, y2: int) -> int:
         if y0 == y2:  # Handle awkward all-on-same-line case as its own thing
             a = x0
             b = x0
@@ -135,7 +140,7 @@ class Triangle(Polygon):
         return self._palette[2]
 
     @fill.setter
-    def fill(self, color):
+    def fill(self, color: Optional[int]):
         if color is None:
             self._palette[2] = 0
             self._palette.make_transparent(2)

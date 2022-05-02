@@ -20,6 +20,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 import displayio
 
@@ -43,7 +47,8 @@ class Rect(displayio.TileGrid):
 
     """
 
-    def __init__(self, x, y, width, height, *, fill=None, outline=None, stroke=1):
+    def __init__(self, x: int, y: int, width: int, height: int, *, fill: Optional[int] = None,
+     outline: Optional[int] = None, stroke: int =1) -> None:
         self._bitmap = displayio.Bitmap(width, height, 2)
         self._palette = displayio.Palette(2)
 
@@ -73,7 +78,7 @@ class Rect(displayio.TileGrid):
         return self._palette[0]
 
     @fill.setter
-    def fill(self, color):
+    def fill(self, color: Optional[int]):
         if color is None:
             self._palette[0] = 0
             self._palette.make_transparent(0)
@@ -88,7 +93,7 @@ class Rect(displayio.TileGrid):
         return self._palette[1]
 
     @outline.setter
-    def outline(self, color):
+    def outline(self, color: Optional[int]):
         if color is None:
             self._palette[1] = 0
             self._palette.make_transparent(1)

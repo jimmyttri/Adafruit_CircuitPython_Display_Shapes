@@ -36,6 +36,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 # pylint: disable=too-many-instance-attributes
 
@@ -59,15 +63,15 @@ class Sparkline(displayio.Group):
 
     def __init__(
         self,
-        width,
-        height,
-        max_items,
-        y_min=None,  # None = autoscaling
-        y_max=None,  # None = autoscaling
-        x=0,
-        y=0,
-        color=0xFFFFFF,  # line color, default is WHITE
-    ):
+        width: int,
+        height: int,
+        max_items: int,
+        y_min: Optional[int] = None,  # None = autoscaling
+        y_max: Optional[int] = None,  # None = autoscaling
+        x: int = 0,
+        y: int= 0,
+        color: Optional[int] = 0xFFFFFF,  # line color, default is WHITE
+    ) -> None:
 
         # define class instance variables
         self.width = width  # in pixels
@@ -95,7 +99,7 @@ class Sparkline(displayio.Group):
             self.pop()
         self._spark_list = []  # empty the list
 
-    def add_value(self, value):
+    def add_value(self, value: Optional[float]) -> float:
         """Add a value to the sparkline.
         :param value: The value to be added to the sparkline
         """
@@ -111,7 +115,7 @@ class Sparkline(displayio.Group):
     # pylint: disable=no-else-return
     @staticmethod
     def _xintercept(
-        x_1, y_1, x_2, y_2, horizontal_y
+        x_1: int, y_1: int, x_2: int, y_2: int, horizontal_y: int
     ):  # finds intercept of the line and a horizontal line at horizontalY
         slope = (y_2 - y_1) / (x_2 - x_1)
         b = y_1 - slope * x_1
@@ -124,7 +128,7 @@ class Sparkline(displayio.Group):
             ) / slope  # calculate the x-intercept at position y=horizontalY
             return int(xint)
 
-    def _plotline(self, x_1, last_value, x_2, value, y_bottom, y_top):
+    def _plotline(self, x_1: int, last_value: int, x_2: int, value: int, y_bottom: int, y_top: int):
 
         y_2 = int(self.height * (y_top - value) / (y_top - y_bottom))
         y_1 = int(self.height * (y_top - last_value) / (y_top - y_bottom))

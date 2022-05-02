@@ -20,6 +20,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 from adafruit_display_shapes.polygon import Polygon
 
@@ -38,7 +42,7 @@ class Line(Polygon):
     :param color: The color of the line.
     """
 
-    def __init__(self, x0, y0, x1, y1, color):
+    def __init__(self, x0: int, y0: int, x1: int, y1: int, color: Optional[int]) -> None:
         super().__init__([(x0, y0), (x1, y1)], outline=color)
 
     @property

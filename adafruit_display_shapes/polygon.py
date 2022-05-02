@@ -20,6 +20,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Tuple, Optional
+except ImportError:
+    pass
 
 import displayio
 
@@ -36,7 +40,7 @@ class Polygon(displayio.TileGrid):
                     ``None`` for no outline.
     """
 
-    def __init__(self, points, *, outline=None):
+    def __init__(self, points: list[Tuple[int, int]], *, outline: Optional[int] = None) -> None:
         xs = []
         ys = []
 
@@ -77,7 +81,7 @@ class Polygon(displayio.TileGrid):
         )
 
     # pylint: disable=invalid-name, too-many-locals, too-many-branches
-    def _line(self, x0, y0, x1, y1, color):
+    def _line(self, x0: int, y0: int, x1: int, y1: int, color: Optional[int]) -> None:
         if x0 == x1:
             if y0 > y1:
                 y0, y1 = y1, y0
@@ -127,7 +131,7 @@ class Polygon(displayio.TileGrid):
         return self._palette[1]
 
     @outline.setter
-    def outline(self, color):
+    def outline(self, color: Optional[int]) -> None:
         if color is None:
             self._palette[1] = 0
             self._palette.make_transparent(1)

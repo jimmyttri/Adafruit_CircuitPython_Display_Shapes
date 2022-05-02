@@ -20,6 +20,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 from adafruit_display_shapes.roundrect import RoundRect
 
@@ -42,7 +46,8 @@ class Circle(RoundRect):
 
     """
 
-    def __init__(self, x0, y0, r, *, fill=None, outline=None, stroke=1):
+    def __init__(self, x0: int, y0: int , r: int, *, fill: Optional[int] = None,
+     outline: Optional[int] = None, stroke: int = 1) -> None:
         super().__init__(
             x0 - r,
             y0 - r,
@@ -54,7 +59,7 @@ class Circle(RoundRect):
             stroke=stroke,
         )
         self.r = r
-
+    
     @property
     def x0(self):
         """The x-position of the center of the circle."""
@@ -66,9 +71,9 @@ class Circle(RoundRect):
         return self.y + self.r
 
     @x0.setter
-    def x0(self, x0):
+    def x0(self, x0: int):
         self.x = x0 - self.r
 
     @y0.setter
-    def y0(self, y0):
+    def y0(self, y0 : int):
         self.y = y0 - self.r
